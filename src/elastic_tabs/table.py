@@ -6,6 +6,18 @@ class Table:
     def __init__(self, rows: Sequence[Sequence[str]]):
         self._rows = rows
 
+    def __repr__(self):
+        return repr(f"Table({self._rows!r})")
+
+    def __str__(self):
+        return str(self._rows)
+
+    def __eq__(self, other):
+        if isinstance(other, Table):
+            return self._rows == other._rows
+        else:
+            return False
+
     def columns(self) -> Iterator[Sequence[str]]:
         return zip_longest(*self._rows, fillvalue="")
 
