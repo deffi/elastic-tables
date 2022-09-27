@@ -1,6 +1,8 @@
 Render options:
   * Keep trailing whitespace (always pad last column, might be right-padded)
   * Extend rows (same number of cells in each row)
+  * Recognize numeric cells?
+    * Don't want this for decimals? But leading period -> non-numeric
 
 Chunk separators (options):
   * Blank line
@@ -9,9 +11,8 @@ Chunk separators (options):
   * Vertical tab or form feed at the end of / somewhere in a line
 
 Parsing:
-  * Recognize numeric cells?
-    * Don't want this for decimals? But leading period -> non-numeric
   * Reproduce original line breaks?
+  * Pass through lines without tabs?
 
 Alignment:
   * Types:
