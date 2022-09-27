@@ -22,6 +22,8 @@ Alignment:
   * Control:
     * Setup functions
     * Escape sequences? At least for left-align?
+    * Keep trailing spaces from original?
+    * Consider spaces when doing alignment?
 
 Interface:
   * Parse/render functions
