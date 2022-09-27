@@ -7,6 +7,7 @@ class Parser:
     def __init__(self):
         pass
 
+    # TODO separate chunk splitting and table generation
     def parse(self, lines: Iterable[str]) -> Iterator[Table]:
         rows: List[Sequence[str]] = []
 
