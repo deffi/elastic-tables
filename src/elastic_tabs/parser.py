@@ -7,18 +7,18 @@ class Parser:
     def __init__(self):
         pass
 
-    # TODO separate chunk splitting and table generation
-    def parse(self, lines: Iterable[str]) -> Iterator[Table]:
-        rows: List[Sequence[str]] = []
-
-        def flush() -> Iterator[Table]:
-            nonlocal rows
-            yield Table(rows)
-            rows = []
+    @staticmethod
+    def chunks_from_lines(lines: Iterable[str]) -> Iterator[Sequence[str]]:
+        rows: List[str] = []
 
         for line in lines:
-            rows.append(line.split("\t"))
+            rows.append(line)
             if len(line.strip()) == 0:
-                yield from flush()
+                yield rows
+                rows = []
 
-        yield from flush()
+        yield rows
+
+    def split_tables(self, lines: Iterable[str]) -> Iterator[Table]:
+        for chunk in self.chunks_from_lines(lines):
+            yield Table([line.split("\t") for line in chunk])
