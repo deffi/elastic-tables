@@ -23,7 +23,7 @@ class ParserTest(unittest.TestCase):
             ["f", "waldo"],
         ])]
 
-        self.assertEqual(tables, list (Parser().split_tables(text)))
+        self.assertEqual(tables, list (Parser().tables_from_lines(text)))
 
 
 if __name__ == '__main__':
