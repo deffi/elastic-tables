@@ -9,6 +9,9 @@ Chunk separators (options):
     * Line with only whitespace counts as blank?
     * Can we have a blank line without causing a chunk break?
   * Vertical tab or form feed at the end of / somewhere in a line
+  * Line without a column separator
+    * More precisely, split before a line if its "has column separator" is
+      different from the previous line
 
 Parsing:
   * Reproduce original line breaks?
