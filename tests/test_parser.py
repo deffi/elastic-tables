@@ -5,25 +5,26 @@ from elastic_tabs import Parser, Table
 
 
 class ParserTest(unittest.TestCase):
-    def test_blank_line(self):
+    def test_empty(self):
+        self.assertEqual(Table([]), Parser().table_from_chunk([]))
+
+    def test_blank(self):
+        self.assertEqual(Table([[""]]), Parser().table_from_chunk([""]))
+
+    def test_chunk(self):
         text = dedent("""
             foo\tb
+            or
             f\tbar
-            
-            foobar\tw
-            f\twaldo
         """).strip().splitlines()
 
-        tables = [Table([
+        expected = Table([
             ["foo", "b"],
+            ["or"],
             ["f", "bar"],
-            [""]
-        ]), Table([
-            ["foobar", "w"],
-            ["f", "waldo"],
-        ])]
+        ])
 
-        self.assertEqual(tables, list (Parser().tables_from_lines(text)))
+        self.assertEqual(expected, Parser().table_from_chunk(text))
 
 
 if __name__ == '__main__':
