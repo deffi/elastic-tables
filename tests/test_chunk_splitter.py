@@ -26,5 +26,6 @@ class ChunkSplitterTest(unittest.TestCase):
         splitter = ChunkSplitter()
         self.assertEqual([["foo", ""], ["bar"]], list(splitter.chunks_from_lines(["foo", "", "bar"])))
 
+
 if __name__ == '__main__':
     unittest.main()

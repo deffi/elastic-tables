@@ -2,6 +2,7 @@ import unittest
 
 from elastic_tabs import Renderer, Table
 
+
 class RendererTest(unittest.TestCase):
     def test_render_cell(self):
         # Empty string
@@ -43,7 +44,6 @@ class RendererTest(unittest.TestCase):
             list(Renderer().render(Table([
                 ["foo", "b"],
                 ["f"]]))))
-
 
 
 if __name__ == '__main__':

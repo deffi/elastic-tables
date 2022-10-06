@@ -2,6 +2,7 @@ from typing import Iterator, Iterable, List
 
 # TODO multiple consecutive blank lines should be a single chunk
 
+
 class ChunkSplitter:
     split_on_blank_line = True
     split_on_vertical_tab = True
