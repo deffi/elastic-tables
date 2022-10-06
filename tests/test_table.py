@@ -25,47 +25,6 @@ class RenderTest(unittest.TestCase):
         # Multiple rows (different number of cells)
         self.assertEqual([3, 2], Table([["a", "bb"], ["ccc"]]).column_widths())
 
-    def test_render_cell(self):
-        # Empty string
-        self.assertEqual("", Table.render_cell("", 0))
-        self.assertEqual("    ", Table.render_cell("", 4))
-
-        # Pad
-        self.assertEqual("foo ", Table.render_cell("foo", 4))
-
-        # Fits
-        self.assertEqual("foo", Table.render_cell("foo", 3))
-
-        # Too long
-        with self.assertRaises(ValueError):
-            Table.render_cell("foobar", 4)
-
-    def test_render_row(self):
-        self.assertEqual("a  foo  bc  ", Table.render_row(["a", "foo", "b", "c"], [3, 5, 1, 3]))
-
-    def test_render_table(self):
-        # Empty table
-        self.assertEqual([], Table([]).render())
-
-        # Empty rows
-        self.assertEqual(["", ""], Table([[], []]).render())
-
-        # Equal column lengths
-        self.assertEqual([
-            "foob  ",  # TODO trailing tabs, yay or nay?
-            "b  bar"],
-            Table([
-                ["foo", "b"],
-                ["b", "bar"]]).render())
-
-        # Different column lengths
-        self.assertEqual([
-            "foob",
-            "f  "],  # TODO extra space for second column, yay or nay?
-            Table([
-                ["foo", "b"],
-                ["f"]]).render())
-
 
 if __name__ == '__main__':
     unittest.main()

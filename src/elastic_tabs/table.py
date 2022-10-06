@@ -5,10 +5,10 @@ from typing import Sequence, Iterator
 
 @dataclass()
 class Table:
-    _rows: Sequence[Sequence[str]]
+    rows: Sequence[Sequence[str]]
 
     def columns(self) -> Iterator[Sequence[str]]:
-        return zip_longest(*self._rows, fillvalue="")
+        return zip_longest(*self.rows, fillvalue="")
 
     @staticmethod
     def column_width(column: Sequence[str]) -> int:
@@ -20,18 +20,3 @@ class Table:
     def column_widths(self) -> Sequence[int]:
         columns = self.columns()
         return [self.column_width(column) for column in columns]
-
-    @staticmethod
-    def render_cell(text: str, width: int) -> str:
-        if len(text) > width:
-            raise ValueError("Text too long")
-
-        return text.ljust(width)
-
-    @classmethod
-    def render_row(cls, row: Sequence[str], widths: Sequence[int]) -> str:
-        return "".join(cls.render_cell(cell, width) for cell, width in zip (row, widths))
-
-    def render(self) -> Sequence[str]:
-        columns_widths = self.column_widths()
-        return [self.render_row(row, columns_widths) for row in self._rows]
