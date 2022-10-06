@@ -23,26 +23,26 @@ class RendererTest(unittest.TestCase):
 
     def test_render_table(self):
         # Empty table
-        self.assertEqual([], Renderer().render(Table([])))
+        self.assertEqual([], list(Renderer().render(Table([]))))
 
         # Empty rows
-        self.assertEqual(["", ""], Renderer().render(Table([[], []])))
+        self.assertEqual(["", ""], list(Renderer().render(Table([[], []]))))
 
         # Equal column lengths
         self.assertEqual([
             "foob  ",  # TODO trailing tabs, yay or nay?
             "b  bar"],
-            Renderer().render(Table([
+            list(Renderer().render(Table([
                 ["foo", "b"],
-                ["b", "bar"]])))
+                ["b", "bar"]]))))
 
         # Different column lengths
         self.assertEqual([
             "foob",
             "f  "],  # TODO extra space for second column, yay or nay?
-            Renderer().render(Table([
+            list(Renderer().render(Table([
                 ["foo", "b"],
-                ["f"]])))
+                ["f"]]))))
 
 
 
