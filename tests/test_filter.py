@@ -7,14 +7,18 @@ class FilterTest(unittest.TestCase):
     def test_splitting(self):
         f = Filter()
 
-        self.assertEqual([], list(f.add_line("foo\tb")))
-        self.assertEqual(["foob  ", "b  bar"], list(f.add_line("b\tbar\v")))
+        f.add_line("foo\tb")
+        self.assertEqual([], list(f.render_tables()))
+        f.add_line("b\tbar\v")
+        self.assertEqual(["foob  ", "b  bar"], list(f.render_tables()))
 
     def test_flush(self):
         f = Filter()
 
-        self.assertEqual([], list(f.add_line("foo\tb")))
-        self.assertEqual(["foob"], list(f.flush()))
+        f.add_line("foo\tb")
+        self.assertEqual([], list(f.render_tables()))
+        f.flush()
+        self.assertEqual(["foob"], list(f.render_tables()))
 
 
 if __name__ == '__main__':

@@ -7,15 +7,13 @@ class Filter:
         self.parser = Parser()
         self.renderer = Renderer()
 
-    def _filter(self):
+    def render_tables(self):
         for chunk in self.chunk_splitter:
             table = self.parser.table_from_chunk(chunk)
             yield from self.renderer.render(table)
 
     def add_line(self, line: str):
         self.chunk_splitter.add_line(line)
-        yield from self._filter()
 
     def flush(self):
         self.chunk_splitter.flush()
-        yield from self._filter()
