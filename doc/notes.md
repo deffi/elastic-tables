@@ -1,9 +1,12 @@
 Next:
-  * File filtering script
   * Global install stdout
-  * Clarify trailing empty lines
+  * Clarify trailing empty lines, enable test_elastic_tabs
+  * Create package
   * Publish package
   * Auto-publish via Github actions
+
+Tests:
+  * Different line separators (\n, \r\n)
 
 Render options:
   * Keep trailing whitespace (always pad last column, might be right-padded)
