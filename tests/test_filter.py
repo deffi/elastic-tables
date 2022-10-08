@@ -20,6 +20,9 @@ class FilterTest(unittest.TestCase):
         f.flush()
         self.assertEqual(["foob"], list(f.render_tables()))
 
+    def test_filter(self):
+        self.assertEqual("foob  \nb  bar", Filter.filter("foo\tb\nb\tbar"))
+
 
 if __name__ == '__main__':
     unittest.main()
