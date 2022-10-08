@@ -1,7 +1,7 @@
 Next:
-  * Full string filtering
-  * File filtering + script
+  * File filtering script
   * Global install stdout
+  * Clarify trailing empty lines
   * Publish package
   * Auto-publish via Github actions
 
