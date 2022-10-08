@@ -1,3 +1,5 @@
+from typing import Iterable
+
 from elastic_tabs import ChunkSplitter, Parser, Renderer
 
 
@@ -14,6 +16,9 @@ class Filter:
 
     def add_line(self, line: str):
         self.chunk_splitter.add_line(line)
+
+    def add_lines(self, lines: Iterable[str]):
+        self.chunk_splitter.add_lines(lines)
 
     def flush(self):
         self.chunk_splitter.flush()

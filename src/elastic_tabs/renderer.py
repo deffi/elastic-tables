@@ -16,6 +16,6 @@ class Renderer:
     def render_row(self, row: Sequence[str], widths: Sequence[int]) -> str:
         return "".join(self.render_cell(cell, width) for cell, width in zip (row, widths))
 
-    def render(self, table: Table) -> Iterator[str]:  # TODO return generator?
+    def render(self, table: Table) -> Iterator[str]:
         columns_widths = table.column_widths()
         return (self.render_row(row, columns_widths) for row in table.rows)

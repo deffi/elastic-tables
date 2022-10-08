@@ -19,10 +19,8 @@ class StreamFilter:
         self._buffer += data
         lines, self._buffer = splitlines(self._buffer)
 
-        for line in lines:
-            self.filter.add_line(line)
+        self.filter.add_lines(lines)
         self.render_tables()
-        # self.stream.flush()
 
     def flush(self):
         self.filter.flush()
