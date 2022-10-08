@@ -1,9 +1,9 @@
 Next:
-  * Github action
   * Full string filtering
   * File filtering + script
   * Global install stdout
   * Publish package
+  * Auto-publish via Github actions
 
 Render options:
   * Keep trailing whitespace (always pad last column, might be right-padded)
