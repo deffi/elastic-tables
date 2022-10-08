@@ -1,3 +1,10 @@
+Next:
+  * Github action
+  * Full string filtering
+  * File filtering + script
+  * Global install stdout
+  * Publish package
+
 Render options:
   * Keep trailing whitespace (always pad last column, might be right-padded)
   * Extend rows (same number of cells in each row)
