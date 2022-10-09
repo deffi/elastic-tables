@@ -1,7 +1,10 @@
 Next:
   * Text sources:
     * Internal (\n)
-    * Stdin 
+    * Stdin
+    * File
+    * Stdin and file must use str (and text file) rather than bytes: a UTF-8
+      stream might contain the byte value of the line terminator
   * Line separators:
     * We need to keep the separators so we can output the original separators
     * We still have to remove the line endings for layout calculation, or the
