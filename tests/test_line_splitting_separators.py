@@ -82,7 +82,7 @@ class LineSplittingSeparatorsTests(unittest.TestCase):
         self.assertEqual([b"foo\x1ebar"  ],    split(b"foo\x1ebar"))    # Record separator
         self.assertEqual([b"foo\x85bar"  ],    split(b"foo\x85bar"))    # Next line (C1)
 
-    def test_separators_text_file_universal_newlines(self):
+    def test_separators_text_file_universal_newlines_translate(self):
         def split(string: str) -> List[str]:
             with TemporaryDirectory() as root:
                 file_path = Path(root) / "test"
@@ -104,6 +104,29 @@ class LineSplittingSeparatorsTests(unittest.TestCase):
         self.assertEqual(["foo\x85bar"  ], split("foo\x85bar"))    # Next line (C1)
         self.assertEqual(["foo\u2028bar"], split("foo\u2028bar"))  # Line separator
         self.assertEqual(["foo\u2029bar"], split("foo\u2029bar"))  # Paragraph separator
+
+    def test_separators_text_file_universal_newlines_original(self):
+        def split(string: str) -> List[str]:
+            with TemporaryDirectory() as root:
+                file_path = Path(root) / "test"
+                file_path.write_bytes(string.encode("utf-8"))
+                with open(file_path, "r", encoding="utf-8", newline='') as file:  # Non-translating universal newlines
+                    result = list(file)
+            return result
+
+        # Input text files (with non-translating universal newlines) translate CR, LF, and CRLF
+        # to LF and then only split on LF.
+        self.assertEqual(["foo\n"  , "bar"], split("foo\nbar"))      # Line feed
+        self.assertEqual(["foo\r"  , "bar"], split("foo\rbar"))      # Carriage return
+        self.assertEqual(["foo\r\n", "bar"], split("foo\r\nbar"))    # Carriage return + line feed
+        self.assertEqual(["foo\vbar"      ], split("foo\vbar"))      # Vertical tab
+        self.assertEqual(["foo\fbar"      ], split("foo\fbar"))      # Form feed
+        self.assertEqual(["foo\x1cbar"    ], split("foo\x1cbar"))    # File separator
+        self.assertEqual(["foo\x1dbar"    ], split("foo\x1dbar"))    # Group separator
+        self.assertEqual(["foo\x1ebar"    ], split("foo\x1ebar"))    # Record separator
+        self.assertEqual(["foo\x85bar"    ], split("foo\x85bar"))    # Next line (C1)
+        self.assertEqual(["foo\u2028bar"  ], split("foo\u2028bar"))  # Line separator
+        self.assertEqual(["foo\u2029bar"  ], split("foo\u2029bar"))  # Paragraph separator
 
     def test_separators_text_file_specific_newlines(self):
         def split(string: str) -> List[str]:
@@ -149,13 +172,6 @@ class LineSplittingSeparatorsTests(unittest.TestCase):
         self.assertEqual([b"foo\x1dbar"     ], split(b"foo\x1dbar"))  # Group separator
         self.assertEqual([b"foo\x1ebar"     ], split(b"foo\x1ebar"))  # Record separator
         self.assertEqual([b"foo\x85bar"     ], split(b"foo\x85bar"))  # Next line (C1)
-
-    # def test_str_splitlines_blanks(self):
-    #     self.assertEqual([], "".splitlines())            # No lines
-    #     self.assertEqual([""], "\n".splitlines())        # Single empty line
-    #     self.assertEqual(["foo"], "foo".splitlines())    # Single unterminated line
-    #     self.assertEqual(["foo"], "foo\n".splitlines())  # Single terminated line
-    #
 
 
 if __name__ == '__main__':
