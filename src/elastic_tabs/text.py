@@ -1,6 +1,11 @@
-from typing import Tuple, Sequence
+import re
+from typing import Tuple, Sequence, Iterator
+
+from elastic_tabs import Line
+from elastic_tabs.iterable import grouper
 
 
+# TODO remove
 def splitlines(string: str, keep_ends: bool = False) -> Tuple[Sequence[str], str]:
     """Returns lines, remainder"""
 
@@ -27,3 +32,24 @@ def splitlines(string: str, keep_ends: bool = False) -> Tuple[Sequence[str], str
         remainder = remainder[:-1]
 
     return lines, remainder
+
+
+def split_lines(string: str) -> Tuple[Iterator[Line], str]:
+    """Splits a string into lines and returns a tuple of:
+      * An iterator that yields Line instances for terminated lines
+      * An str that contains the remainder of the string (potentially empty)
+
+    Recognizes \r and \r\n as line terminators.
+    """
+
+    # Examples:
+    #     ["foo", "\n", "bar"]
+    #     ["foo", "\n", "bar", "\n"]
+    parts = re.split(r"(\r?\n)", string)
+
+    # An even number means that the last line was terminated, so there is no
+    # remainder.
+    if len(parts) % 2 == 0:
+        return (Line(content, terminator) for content, terminator in grouper(2, parts, None)), ""
+    else:
+        return (Line(content, terminator) for content, terminator in grouper(2, parts[:-1], None)), parts[-1]
