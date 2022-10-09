@@ -47,9 +47,13 @@ def split_lines(string: str) -> Tuple[Iterator[Line], str]:
     #     ["foo", "\n", "bar", "\n"]
     parts = re.split(r"(\r?\n)", string)
 
-    # An even number means that the last line was terminated, so there is no
-    # remainder.
-    if len(parts) % 2 == 0:
-        return (Line(content, terminator) for content, terminator in grouper(2, parts, None)), ""
+    # An odd number means that the last line is unterminated
+    if len(parts) % 2 != 0:
+        (*parts, remainder) = parts
     else:
-        return (Line(content, terminator) for content, terminator in grouper(2, parts[:-1], None)), parts[-1]
+        remainder = ""
+
+    pairs = grouper(2, parts, None)
+    lines = (Line(content, terminator) for content, terminator in pairs)
+
+    return lines, remainder
