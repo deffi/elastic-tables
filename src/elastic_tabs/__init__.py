@@ -1,3 +1,4 @@
+from .line import Line
 from .table import Table
 
 from .chunk_splitter import ChunkSplitter
