@@ -1,6 +1,7 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from io import StringIO, BytesIO
+import re
 from typing import List
 import unittest
 
@@ -172,6 +173,32 @@ class LineSplittingSeparatorsTests(unittest.TestCase):
         self.assertEqual([b"foo\x1dbar"     ], split(b"foo\x1dbar"))  # Group separator
         self.assertEqual([b"foo\x1ebar"     ], split(b"foo\x1ebar"))  # Record separator
         self.assertEqual([b"foo\x85bar"     ], split(b"foo\x85bar"))  # Next line (C1)
+
+    def test_separators_re(self):
+        def grouper(n, iterable, fill_value=None):
+            from itertools import zip_longest
+            args = [iter(iterable)] * n
+            return zip_longest(fillvalue=fill_value, *args)
+
+        def split(string: str) -> List[str]:
+            groups = re.split(r'(\n)', string)
+            groups.append("")
+            result = ["".join(pair) for pair in grouper(2, groups, None)]
+            return result
+
+        # This way, we can split on \n ourselves. Since we're including the
+        # separator in the result, we get \r\n automatically.
+        self.assertEqual(["foo\n"  , "bar"], split("foo\nbar"))      # Line feed
+        self.assertEqual(["foo\rbar"      ], split("foo\rbar"))      # Carriage return
+        self.assertEqual(["foo\r\n", "bar"], split("foo\r\nbar"))    # Carriage return + line feed
+        self.assertEqual(["foo\vbar"      ], split("foo\vbar"))      # Vertical tab
+        self.assertEqual(["foo\fbar"      ], split("foo\fbar"))      # Form feed
+        self.assertEqual(["foo\x1cbar"    ], split("foo\x1cbar"))    # File separator
+        self.assertEqual(["foo\x1dbar"    ], split("foo\x1dbar"))    # Group separator
+        self.assertEqual(["foo\x1ebar"    ], split("foo\x1ebar"))    # Record separator
+        self.assertEqual(["foo\x85bar"    ], split("foo\x85bar"))    # Next line (C1)
+        self.assertEqual(["foo\u2028bar"  ], split("foo\u2028bar"))  # Line separator
+        self.assertEqual(["foo\u2029bar"  ], split("foo\u2029bar"))  # Paragraph separator
 
 
 if __name__ == '__main__':
