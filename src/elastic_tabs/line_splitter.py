@@ -1,7 +1,7 @@
 from typing import Callable, Iterable, Sequence, List
 
-from elastic_tabs import Line
-from elastic_tabs.text import split_lines
+from elastic_tabs.model import Line
+from elastic_tabs.util.text import split_lines
 
 
 class LineSplitter:

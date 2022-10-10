@@ -1,8 +1,8 @@
 import re
 from typing import Tuple, Sequence, Iterator
 
-from elastic_tabs import Line
-from elastic_tabs.iterable import grouper
+from elastic_tabs.model import Line
+from elastic_tabs.util.iterable import grouper
 
 
 # TODO remove

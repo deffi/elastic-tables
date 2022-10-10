@@ -1,6 +1,7 @@
 import unittest
 
-from elastic_tabs import LineSplitter, Line
+from elastic_tabs.model import Line
+from elastic_tabs import LineSplitter
 
 
 class LineSplitterTest(unittest.TestCase):

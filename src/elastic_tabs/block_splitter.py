@@ -1,7 +1,7 @@
 from dataclasses import replace
 from typing import Callable, Iterable, Sequence, List
 
-from elastic_tabs import Line, Block
+from elastic_tabs.model import Line, Block
 
 
 class BlockSplitter:

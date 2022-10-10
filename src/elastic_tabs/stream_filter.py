@@ -1,5 +1,5 @@
 from elastic_tabs import Filter
-from elastic_tabs.text import splitlines
+from elastic_tabs.util.text import splitlines
 
 
 class StreamFilter:

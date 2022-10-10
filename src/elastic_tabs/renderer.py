@@ -1,4 +1,4 @@
-from elastic_tabs import Table
+from elastic_tabs.model import Table
 
 from typing import Sequence, Iterator
 

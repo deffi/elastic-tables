@@ -1,6 +1,7 @@
 import unittest
 
-from elastic_tabs import BlockSplitter, Line, Block
+from elastic_tabs.model import Line, Block
+from elastic_tabs import BlockSplitter
 
 blank = Line("", "\n")
 foo = Line("foo", "\n")
