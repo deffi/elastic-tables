@@ -1,8 +1,10 @@
 from .line import Line
+from .block import Block
 from .table import Table
 
 from .line_splitter import LineSplitter
 from .chunk_splitter import ChunkSplitter
+from .block_splitter import BlockSplitter
 from .parser import Parser
 from .renderer import Renderer
 
