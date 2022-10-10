@@ -2,7 +2,7 @@ import unittest
 from textwrap import dedent
 
 from elastic_tabs.model import Table
-from elastic_tabs import Parser
+from elastic_tabs.old import Parser
 
 
 class ParserTest(unittest.TestCase):

@@ -1,6 +1,6 @@
 import unittest
 
-from elastic_tabs import ChunkSplitter
+from elastic_tabs.old import ChunkSplitter
 
 
 class ChunkSplitterTest(unittest.TestCase):

@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from elastic_tabs import Filter
+from elastic_tabs.old import Filter
 
 
 class FilterTest(unittest.TestCase):
@@ -25,7 +25,7 @@ class FilterTest(unittest.TestCase):
         self.assertEqual("foob  \nb  bar", Filter.filter("foo\tb\nb\tbar"))
 
     def test_filter_file(self):
-        testdata = Path(__file__).parent / "data"
+        testdata = Path(__file__).parent.parent / "data"
 
         self.assertEqual((testdata / "test1_expected.txt").read_text(), Filter.filter((testdata / "test1_in.txt").read_text()))
 

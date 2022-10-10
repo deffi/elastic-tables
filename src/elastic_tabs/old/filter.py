@@ -1,6 +1,7 @@
 from typing import Iterable, Iterator
 
-from elastic_tabs import ChunkSplitter, Parser, Renderer
+from elastic_tabs.old import ChunkSplitter, Parser
+from elastic_tabs import Renderer
 
 
 class Filter:

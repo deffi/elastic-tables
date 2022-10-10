@@ -1,4 +1,4 @@
-from elastic_tabs import Filter
+from elastic_tabs.old import Filter
 from elastic_tabs.util.text import splitlines
 
 
