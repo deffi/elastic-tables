@@ -1,0 +1,34 @@
+import unittest
+
+from elastic_tabs import LineSplitter, Line
+
+
+class LineSplitterTest(unittest.TestCase):
+    def test_with_enqueue(self):
+        foo = Line("foo", "\n")
+        bar_baz = Line("barbaz", "\n")
+        qux = Line("qux", "")
+
+        splitter = LineSplitter(None)
+        self.assertEqual([], splitter.lines(clear=False))
+
+        splitter.add("foo\n")
+        self.assertEqual([foo], splitter.lines(clear=False))
+
+        splitter.add("bar")
+        self.assertEqual([foo], splitter.lines(clear=False))
+
+        splitter.add("baz\n")
+        self.assertEqual([foo, bar_baz], splitter.lines(clear=False))
+
+        splitter.add("qux")
+        self.assertEqual([foo, bar_baz], splitter.lines(clear=False))
+
+        splitter.flush()
+        self.assertEqual([foo, bar_baz, qux], splitter.lines(clear=False))
+        self.assertEqual([foo, bar_baz, qux], splitter.lines())
+        self.assertEqual([], splitter.lines())
+
+
+if __name__ == '__main__':
+    unittest.main()

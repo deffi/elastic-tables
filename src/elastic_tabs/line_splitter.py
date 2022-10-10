@@ -4,7 +4,6 @@ from elastic_tabs import Line
 from elastic_tabs.text import split_lines
 
 
-# TODO test
 class LineSplitter:
     def __init__(self, callback: Callable[[Iterable[Line]], None] = None):
         self.callback = callback or self.enqueue
@@ -13,14 +12,19 @@ class LineSplitter:
         self._lines: List[Line] = []
 
     def add(self, string: str):
-        self._buffer += string
-        lines, remainder = split_lines(self._buffer)
-        self.callback(List[lines])
+        lines, remainder = split_lines(self._buffer + string)
+        self._buffer = remainder
+        self.callback(lines)
 
-    def enqueue(self, line: Line):
-        self._lines.append(line)
+    def flush(self):
+        self.callback([Line(self._buffer, "")])
+        self._buffer = None
 
-    def lines(self) -> Sequence[Line]:
+    def enqueue(self, lines: Iterable[Line]):
+        self._lines.extend(lines)
+
+    def lines(self, clear: bool = True) -> Sequence[Line]:
         lines = self._lines
-        self._lines = None
+        if clear:
+            self._lines = []
         return lines
