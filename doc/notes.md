@@ -1,34 +1,40 @@
 Next:
-  * Add new Filter
+  * Add Row (sequence of cells and terminator) with constructor from Line
+  * Change Table to sequence of rows
+  * Add new Filter (line splitter and block splitter, callback or enqueue with
+    string)
   * Add new StreamFilter
   * Remove old classes
   * Move block_splitter and line_splitter to parser package
   * Block splitter, line splitter: consistent interface
-  * Text sources:
-    * Internal (\n)
-    * Stdin
-    * File
-    * Stdin and file must use str (and text file) rather than bytes: a UTF-8
-      stream might contain the byte value of the line terminator
-  * Line separators:
-    * We need to keep the separators so we can output the original separators
-    * We still have to remove the line endings for layout calculation, or the
-      line separator after a short line would make the column longer
-    * We could only split on \n and keep the line endings. That way, we would
-      automatically handle \r\n.
-    * Or we could split on regex \r?\n, if this gives us the line ending
-      directly.
-  * Trailing empty lines: 
-    * The output should match the input
-    * Unterminated lines might not be complete, wait until flushed
-  * Splitting: we'll probably do it manually by appending to a buffer and
-    finding line separators
-    * string.splitlines recognizes too many line endings
-    * Maybe we could use StringIO.readline 
   * Global install stdout
   * Create package
   * Publish package
   * Auto-publish via Github actions
+
+Text sources:
+  * Internal (\n)
+  * Stdin
+  * File
+  * Stdin and file must use str (and text file) rather than bytes: a UTF-8
+  stream might contain the byte value of the line terminator
+
+Line separators:
+  * We need to keep the separators so we can output the original separators
+  * We still have to remove the line endings for layout calculation, or the
+    line separator after a short line would make the column longer
+  * We could only split on \n and keep the line endings. That way, we would
+    automatically handle \r\n.
+  * Or we could split on regex \r?\n, if this gives us the line ending
+    directly.
+
+Trailing empty lines: 
+  * The output should match the input
+  * Unterminated lines might not be complete, wait until flushed
+  Splitting: we'll probably do it manually by appending to a buffer and
+  finding line separators
+  * string.splitlines recognizes too many line endings
+  * Maybe we could use StringIO.readline 
 
 Tests:
   * Different line separators (\n, \r\n)
@@ -39,10 +45,10 @@ Render options:
   * Recognize numeric cells?
     * Don't want this for decimals? But leading period -> non-numeric
 
-Chunk separators (options):
+Block separators (options):
   * Blank line
     * Line with only whitespace counts as blank?
-    * Can we have a blank line without causing a chunk break?
+    * Can we have a blank line without causing a block break?
   * Vertical tab or form feed at the end of / somewhere in a line
   * Line without a column separator
     * More precisely, split before a line if its "has column separator" is
