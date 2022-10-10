@@ -18,7 +18,7 @@ class LineSplitter:
 
     def flush(self):
         self.callback([Line(self._buffer, "")])
-        self._buffer = None
+        self._buffer = ""
 
     def enqueue(self, lines: Iterable[Line]):
         self._lines.extend(lines)
