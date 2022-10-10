@@ -1,4 +1,6 @@
 Next:
+  * Add new Filter
+  * Block splitter, line splitter: consistent interface
   * Text sources:
     * Internal (\n)
     * Stdin
@@ -68,3 +70,8 @@ Interface:
 Escape sequences:
   * Which escape characters are easily accessible?
   * Which unicode escape characters exist?
+
+Future work:
+  * Specify encoding?
+    open ohne encoding benutzt locale.getpreferredencoding(False)
+    https://docs.python.org/3/library/functions.html#open
