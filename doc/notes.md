@@ -1,5 +1,8 @@
 Next:
   * Add new Filter
+  * Add new StreamFilter
+  * Remove old classes
+  * Move block_splitter and line_splitter to parser package
   * Block splitter, line splitter: consistent interface
   * Text sources:
     * Internal (\n)
