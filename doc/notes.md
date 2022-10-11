@@ -1,7 +1,4 @@
 Next:
-  * Add new Filter (line splitter and block splitter, callback or enqueue with
-    string)
-  * Add new StreamFilter
   * Remove old classes
   * Move block_splitter and line_splitter to parser package
   * Block splitter, line splitter: consistent interface
