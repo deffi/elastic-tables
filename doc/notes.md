@@ -1,6 +1,4 @@
 Next:
-  * Remove old classes
-  * Move block_splitter and line_splitter to parser package
   * Block splitter, line splitter: consistent interface
   * Global install stdout
   * Create package
