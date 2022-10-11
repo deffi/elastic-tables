@@ -2,13 +2,15 @@ from dataclasses import dataclass
 from itertools import zip_longest
 from typing import Sequence, Iterator
 
+from elastic_tabs.model import Row
+
 
 @dataclass()
 class Table:
-    rows: Sequence[Sequence[str]]
+    rows: Sequence[Row]
 
     def columns(self) -> Iterator[Sequence[str]]:
-        return zip_longest(*self.rows, fillvalue="")
+        return zip_longest(*(row.cells for row in self.rows), fillvalue="")
 
     @staticmethod
     def column_width(column: Sequence[str]) -> int:

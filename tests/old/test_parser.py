@@ -1,7 +1,7 @@
 import unittest
 from textwrap import dedent
 
-from elastic_tabs.model import Table
+from elastic_tabs.model import Table, Row
 from elastic_tabs.old import Parser
 
 
@@ -10,7 +10,7 @@ class ParserTest(unittest.TestCase):
         self.assertEqual(Table([]), Parser().table_from_chunk([]))
 
     def test_blank(self):
-        self.assertEqual(Table([[""]]), Parser().table_from_chunk([""]))
+        self.assertEqual(Table([Row([""], "\n")]), Parser().table_from_chunk([""]))
 
     def test_chunk(self):
         text = dedent("""
@@ -20,9 +20,9 @@ class ParserTest(unittest.TestCase):
         """).strip().splitlines()
 
         expected = Table([
-            ["foo", "b"],
-            ["or"],
-            ["f", "bar"],
+            Row(["foo", "b"], "\n"),
+            Row(["or"], "\n"),
+            Row(["f", "bar"], "\n"),
         ])
 
         self.assertEqual(expected, Parser().table_from_chunk(text))

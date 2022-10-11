@@ -1,6 +1,6 @@
 import unittest
 
-from elastic_tabs.model import Table
+from elastic_tabs.model import Table, Row
 
 
 class RenderTest(unittest.TestCase):
@@ -16,14 +16,14 @@ class RenderTest(unittest.TestCase):
         self.assertEqual([], Table([]).column_widths())
 
         # Rows with no cells each
-        self.assertEqual([], Table([[]]).column_widths())
-        self.assertEqual([], Table([[], []]).column_widths())
+        self.assertEqual([], Table([Row([], "\n")]).column_widths())
+        self.assertEqual([], Table([Row([], "\n"), Row([], "\n")]).column_widths())
 
         # Single row
-        self.assertEqual([1], Table([["a"]]).column_widths())
+        self.assertEqual([1], Table([Row(["a"], "\n")]).column_widths())
 
         # Multiple rows (different number of cells)
-        self.assertEqual([3, 2], Table([["a", "bb"], ["ccc"]]).column_widths())
+        self.assertEqual([3, 2], Table([Row(["a", "bb"], "\n"), Row(["ccc"], "\n")]).column_widths())
 
 
 if __name__ == '__main__':

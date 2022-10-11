@@ -13,9 +13,10 @@ class Renderer:
 
         return text.ljust(width)
 
+    # TODO should take row
     def render_row(self, row: Sequence[str], widths: Sequence[int]) -> str:
         return "".join(self.render_cell(cell, width) for cell, width in zip (row, widths))
 
     def render(self, table: Table) -> Iterator[str]:
         columns_widths = table.column_widths()
-        return (self.render_row(row, columns_widths) for row in table.rows)
+        return (self.render_row(row.cells, columns_widths) for row in table.rows)

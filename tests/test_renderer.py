@@ -1,6 +1,6 @@
 import unittest
 
-from elastic_tabs.model import Table
+from elastic_tabs.model import Table, Row
 from elastic_tabs import Renderer
 
 
@@ -28,23 +28,23 @@ class RendererTest(unittest.TestCase):
         self.assertEqual([], list(Renderer().render(Table([]))))
 
         # Empty rows
-        self.assertEqual(["", ""], list(Renderer().render(Table([[], []]))))
+        self.assertEqual(["", ""], list(Renderer().render(Table([Row([], "\n"), Row([], "\n")]))))
 
         # Equal column lengths
         self.assertEqual([
             "foob  ",  # TODO trailing tabs, yay or nay?
             "b  bar"],
             list(Renderer().render(Table([
-                ["foo", "b"],
-                ["b", "bar"]]))))
+                Row(["foo", "b"], "\n"),
+                Row(["b", "bar"], "\n")]))))
 
         # Different column lengths
         self.assertEqual([
             "foob",
             "f  "],  # TODO extra space for second column, yay or nay?
             list(Renderer().render(Table([
-                ["foo", "b"],
-                ["f"]]))))
+                Row(["foo", "b"], "\n"),
+                Row(["f"], "\n")]))))
 
 
 if __name__ == '__main__':
