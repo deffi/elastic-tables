@@ -14,6 +14,7 @@ class BlockSplitter:
         self._buffer: List[Line] = []
         self._blocks: List[Block] = []
 
+    # TODO private
     def add_line(self, line: Line):
         split_before = False
         split_after = False
@@ -24,11 +25,11 @@ class BlockSplitter:
 
         if self.split_on_vertical_tab:
             if line.content.startswith("\v"):
-                replace(line, content=line.content[1:])
+                line = replace(line, content=line.content[1:])
                 split_before = True
 
             if line.content.endswith("\v"):
-                replace(line, content=line.content[:-1])
+                line = replace(line, content=line.content[:-1])
                 split_after = True
 
         if split_before:
