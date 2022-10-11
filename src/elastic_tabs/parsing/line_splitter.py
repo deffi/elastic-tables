@@ -17,8 +17,11 @@ class LineSplitter:
         self.callback(lines)
 
     def flush(self):
-        self.callback([Line(self._buffer, "")])
-        self._buffer = ""
+        # TODO this condition was missing, add unit test that would have caught it
+        # TODO similar thing in block splitter?
+        if self._buffer != "":
+            self.callback([Line(self._buffer, "")])
+            self._buffer = ""
 
     def enqueue(self, lines: Iterable[Line]):
         self._lines.extend(lines)
