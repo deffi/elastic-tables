@@ -1,6 +1,4 @@
 Next:
-  * Add Row (sequence of cells and terminator) with constructor from Line
-  * Change Table to sequence of rows
   * Add new Filter (line splitter and block splitter, callback or enqueue with
     string)
   * Add new StreamFilter
