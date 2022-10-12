@@ -1,11 +1,12 @@
-from typing import Iterable, Sequence
+from typing import Callable
 
 from elastic_tabs.parsing import BlockSplitter, LineSplitter, TableGenerator
-from elastic_tabs.model import Table, Block
+from elastic_tabs.model import Block
 from elastic_tabs.rendering import Renderer
 
+
 class Filter:
-    def __init__(self, callback = None):  # TODO annotation
+    def __init__(self, callback: Callable[[str], None] = None):  # TODO annotation
         self._block_splitter = BlockSplitter(self._block)
         self._line_splitter = LineSplitter(self._block_splitter.add_lines)
         self._table_generator = TableGenerator()
