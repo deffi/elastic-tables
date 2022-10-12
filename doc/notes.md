@@ -1,6 +1,5 @@
 Next:
   * Block splitter, line splitter: consistent interface
-  * Global install stdout
   * Create package
   * Publish package
   * Auto-publish via Github actions
