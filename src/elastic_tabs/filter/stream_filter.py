@@ -1,5 +1,3 @@
-from typing import Iterable
-
 from elastic_tabs.filter import Filter
 
 
@@ -21,6 +19,6 @@ class StreamFilter:
         self.filter.flush()
         self.stream.flush()
 
-# sys.stdout = MyFilter(sys.stdout)
-# sys.stderr = MyFilter(sys.stderr)
-
+    def close(self):
+        self.flush()
+        self.stream.close()
