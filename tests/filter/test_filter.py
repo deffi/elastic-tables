@@ -9,20 +9,20 @@ class FilterTest(unittest.TestCase):
         f = Filter()
 
         f.add_text("foo\tb\n")
-        self.assertEqual([], f.text(clear=False))
+        self.assertEqual("", f.text(clear=False))
         f.add_text("b\tbar\v\n")
-        self.assertEqual(["foob  \n", "b  bar\n"], f.text())
+        self.assertEqual("foob  \nb  bar\n", f.text())
 
     def test_flush(self):
         f = Filter()
 
         f.add_text("foo\tb\n")
-        self.assertEqual([], f.text(clear=False))
+        self.assertEqual("", f.text(clear=False))
         f.flush()
-        self.assertEqual(["foob\n"], f.text())
+        self.assertEqual("foob\n", f.text())
 
     def test_filter(self):
-        self.assertEqual(["foob  \n", "b  bar"], Filter.filter("foo\tb\nb\tbar"))
+        self.assertEqual("foob  \nb  bar", Filter.filter("foo\tb\nb\tbar"))
 
     def test_filter_file(self):
         testdata = Path(__file__).parent.parent / "data"

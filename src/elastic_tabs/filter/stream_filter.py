@@ -11,9 +11,8 @@ class StreamFilter:
     def __getattr__(self, name):
         return getattr(self.stream, name)
 
-    def _write_output(self, text_lines: Iterable[str]):
-        for line in text_lines:
-            self.stream.write(line)
+    def _write_output(self, text: str):
+        self.stream.write(text)
 
     def write(self, data):
         self.filter.add_text(data)
