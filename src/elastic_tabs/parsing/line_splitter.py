@@ -25,7 +25,7 @@ class LineSplitter:
 
     def flush(self) -> None:
         # TODO this condition was missing, add unit test that would have caught it
-        # TODO similar thing in block splitter?
+        # TODO similar thing in block splitter and line splitter?
         if self._input_buffer != "":
             self.callback([Line(self._input_buffer, "")])
             self._input_buffer = ""
