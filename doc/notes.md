@@ -10,8 +10,9 @@ Tests:
 Render options:
   * Keep trailing whitespace (always pad last column, might be right-padded)
   * Extend rows (same number of cells in each row)
-  * Recognize numeric cells?
-    * Don't want this for decimals? But leading period -> non-numeric
+  * Right-align numeric cells (configurable)
+    Decimals can be aligned at the point or not at all
+  * Column separator
 
 Block separators (options):
   * Blank line
@@ -42,3 +43,5 @@ Future work:
   * Specify encoding?
     open ohne encoding benutzt locale.getpreferredencoding(False)
     https://docs.python.org/3/library/functions.html#open
+  * Support ANSI escape codes (currently, they probably mess up the formatting)
+  * Allow coloring columns or cells
