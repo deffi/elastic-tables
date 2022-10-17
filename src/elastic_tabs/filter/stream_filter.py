@@ -16,7 +16,7 @@ class StreamFilter(TextIOBase):
         self.stream.write(text)
 
     def write(self, data: str) -> int:
-        self.filter.add_text(data)
+        self.filter.input(data)
         return len(data)
 
     def flush(self) -> None:

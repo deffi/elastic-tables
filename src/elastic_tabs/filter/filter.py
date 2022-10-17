@@ -10,38 +10,50 @@ Callback = Callable[[str], None]
 
 class Filter:
     def __init__(self, callback: Callback = None):
-        self._block_splitter = BlockSplitter(self._block)
-        self._line_splitter = LineSplitter(self._block_splitter.add_lines)
+        self._block_splitter = BlockSplitter(self._input_block)
+        self._line_splitter = LineSplitter(self._block_splitter.input)
         self._table_generator = TableGenerator()
         self._renderer = Renderer()
 
-        self._callback = callback or self.accumulate
-        self._buffer = ""
+        self._callback = callback or self._buffer_result
+        self._result_buffer = ""
 
-    def accumulate(self, text: str) -> None:
-        self._buffer = self._buffer + text
+    @classmethod
+    def filter(cls, text: str) -> str:
+        filter_ = cls()
+        filter_.input(text)
+        filter_.flush()
+        return filter_.text()
 
-    def _block(self, block: Block) -> None:
+    ##############
+    # Processing #
+    ##############
+
+    def _input_block(self, block: Block) -> None:
         table = self._table_generator.table_from_block(block)
         text = self._renderer.render(table)
         self._callback("".join(text))
 
-    def add_text(self, text: str) -> None:
-        self._line_splitter.add(text)
+    ####################
+    # Public interface #
+    ####################
+
+    def input(self, text: str) -> None:
+        self._line_splitter.input(text)
 
     def flush(self) -> None:
         self._line_splitter.flush()
         self._block_splitter.flush()
 
-    def text(self, clear: bool = True) -> str:
-        text = self._buffer
-        if clear:
-            self._buffer = []
-        return "".join(text)
+    ###################
+    # Internal buffer #
+    ###################
 
-    @classmethod
-    def filter(cls, text: str) -> str:
-        filter_ = cls()
-        filter_.add_text(text)
-        filter_.flush()
-        return filter_.text()
+    def _buffer_result(self, text: str) -> None:
+        self._result_buffer = self._result_buffer + text
+
+    def text(self, clear: bool = True) -> str:
+        text = self._result_buffer
+        if clear:
+            self._result_buffer = []
+        return "".join(text)

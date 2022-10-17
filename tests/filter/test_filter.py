@@ -8,15 +8,15 @@ class FilterTest(unittest.TestCase):
     def test_splitting(self):
         f = Filter()
 
-        f.add_text("foo\tb\n")
+        f.input("foo\tb\n")
         self.assertEqual("", f.text(clear=False))
-        f.add_text("b\tbar\v\n")
+        f.input("b\tbar\v\n")
         self.assertEqual("foob  \nb  bar\n", f.text())
 
     def test_flush(self):
         f = Filter()
 
-        f.add_text("foo\tb\n")
+        f.input("foo\tb\n")
         self.assertEqual("", f.text(clear=False))
         f.flush()
         self.assertEqual("foob\n", f.text())

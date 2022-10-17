@@ -1,5 +1,4 @@
 Next:
-  * Block splitter, line splitter, filter: consistent interface
   * TODOs
   * Create package
   * Publish package

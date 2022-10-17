@@ -13,16 +13,16 @@ class LineSplitterTest(unittest.TestCase):
         splitter = LineSplitter(None)
         self.assertEqual([], splitter.lines(clear=False))
 
-        splitter.add("foo\n")
+        splitter.input("foo\n")
         self.assertEqual([foo], splitter.lines(clear=False))
 
-        splitter.add("bar")
+        splitter.input("bar")
         self.assertEqual([foo], splitter.lines(clear=False))
 
-        splitter.add("baz\n")
+        splitter.input("baz\n")
         self.assertEqual([foo, bar_baz], splitter.lines(clear=False))
 
-        splitter.add("qux")
+        splitter.input("qux")
         self.assertEqual([foo, bar_baz], splitter.lines(clear=False))
 
         splitter.flush()

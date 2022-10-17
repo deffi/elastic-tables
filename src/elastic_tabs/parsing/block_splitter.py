@@ -4,18 +4,24 @@ from typing import Callable, Iterable, Sequence, List
 from elastic_tabs.model import Line, Block
 
 
+Callback = Callable[[Block], None]
+
+
 class BlockSplitter:
     split_on_blank_line = True
     split_on_vertical_tab = True
 
     def __init__(self, callback: Callable[[Block], None] = None):
-        self.callback = callback or self.enqueue
+        self._input_buffer: List[Line] = []
+        self._result_buffer: List[Block] = []
 
-        self._buffer: List[Line] = []
-        self._blocks: List[Block] = []
+        self._callback: Callback = callback or self._result_buffer.append
 
-    # TODO private
-    def add_line(self, line: Line) -> None:
+    ##############
+    # Processing #
+    ##############
+
+    def _add_line(self, line: Line) -> None:
         split_before = False
         split_after = False
 
@@ -35,24 +41,29 @@ class BlockSplitter:
         if split_before:
             self.flush()
 
-        self._buffer.append(line)
+        self._input_buffer.append(line)
 
         if split_after:
             self.flush()
 
-    def add_lines(self, lines: Iterable[Line]) -> None:
+    ####################
+    # Public interface #
+    ####################
+
+    def input(self, lines: Iterable[Line]) -> None:
         for line in lines:
-            self.add_line(line)
+            self._add_line(line)
 
     def flush(self) -> None:
-        self.callback(Block(self._buffer))
-        self._buffer = []
+        self._callback(Block(self._input_buffer))
+        self._input_buffer = []
 
-    def enqueue(self, block: Block) -> None:
-        self._blocks.append(block)
+    ###################
+    # Internal buffer #
+    ###################
 
     def blocks(self, clear: bool = True) -> Sequence[Block]:
-        blocks = self._blocks
+        blocks = self._result_buffer
         if clear:
-            self._blocks = []
+            self._result_buffer = []
         return blocks

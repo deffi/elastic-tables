@@ -14,19 +14,19 @@ baz = Line("bar", "\n")
 class BlockSplitterTest(unittest.TestCase):
     def test_vertical_tab_beginning(self):
         splitter = BlockSplitter()
-        splitter.add_lines([foo, v_bar, baz])
+        splitter.input([foo, v_bar, baz])
         splitter.flush()
         self.assertEqual([Block([foo]), Block([bar, baz])], splitter.blocks())
 
     def test_vertical_tab_end(self):
         splitter = BlockSplitter()
-        splitter.add_lines([foo, bar_v, baz])
+        splitter.input([foo, bar_v, baz])
         splitter.flush()
         self.assertEqual([Block([foo, bar]), Block([baz])], splitter.blocks())
 
     def test_blank_line(self):
         splitter = BlockSplitter()
-        splitter.add_lines([foo, blank, baz])
+        splitter.input([foo, blank, baz])
         splitter.flush()
         # TODO should the blank line be in a separate block?
         self.assertEqual([Block([foo, blank]), Block([baz])], splitter.blocks(clear=False))
