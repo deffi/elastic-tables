@@ -5,8 +5,11 @@ from elastic_tabs.model import Block
 from elastic_tabs.rendering import Renderer
 
 
+Callback = Callable[[str], None]
+
+
 class Filter:
-    def __init__(self, callback: Callable[[str], None] = None):  # TODO annotation
+    def __init__(self, callback: Callback = None):
         self._block_splitter = BlockSplitter(self._block)
         self._line_splitter = LineSplitter(self._block_splitter.add_lines)
         self._table_generator = TableGenerator()
@@ -15,18 +18,18 @@ class Filter:
         self._callback = callback or self.accumulate
         self._buffer = ""
 
-    def accumulate(self, text: str):
+    def accumulate(self, text: str) -> None:
         self._buffer = self._buffer + text
 
-    def _block(self, block: Block):
+    def _block(self, block: Block) -> None:
         table = self._table_generator.table_from_block(block)
         text = self._renderer.render(table)
         self._callback("".join(text))
 
-    def add_text(self, text: str):
+    def add_text(self, text: str) -> None:
         self._line_splitter.add(text)
 
-    def flush(self):
+    def flush(self) -> None:
         self._line_splitter.flush()
         self._block_splitter.flush()
 

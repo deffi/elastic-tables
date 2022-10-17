@@ -1,24 +1,28 @@
+from io import TextIOBase
+from typing import Any, IO
+
 from elastic_tabs.filter import Filter
 
 
-class StreamFilter:
-    def __init__(self, stream):
+class StreamFilter(TextIOBase):
+    def __init__(self, stream: IO):
         self.stream = stream
         self.filter = Filter(self._write_output)
 
-    def __getattr__(self, name):
+    def __getattr__(self, name: str) -> Any:
         return getattr(self.stream, name)
 
-    def _write_output(self, text: str):
+    def _write_output(self, text: str) -> None:
         self.stream.write(text)
 
-    def write(self, data):
+    def write(self, data: str) -> int:
         self.filter.add_text(data)
+        return len(data)
 
-    def flush(self):
+    def flush(self) -> None:
         self.filter.flush()
         self.stream.flush()
 
-    def close(self):
+    def close(self) -> None:
         self.flush()
         self.stream.close()

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from typing import Sequence
 
@@ -10,5 +12,5 @@ class Row:
     line_terminator: str
 
     @classmethod
-    def from_line(cls, line: Line):
+    def from_line(cls, line: Line) -> Row:
         return cls(line.content.split("\t"), line.terminator)

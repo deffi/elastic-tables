@@ -15,7 +15,7 @@ class BlockSplitter:
         self._blocks: List[Block] = []
 
     # TODO private
-    def add_line(self, line: Line):
+    def add_line(self, line: Line) -> None:
         split_before = False
         split_after = False
 
@@ -40,15 +40,15 @@ class BlockSplitter:
         if split_after:
             self.flush()
 
-    def add_lines(self, lines: Iterable[Line]):
+    def add_lines(self, lines: Iterable[Line]) -> None:
         for line in lines:
             self.add_line(line)
 
-    def flush(self):
+    def flush(self) -> None:
         self.callback(Block(self._buffer))
         self._buffer = []
 
-    def enqueue(self, block: Block):
+    def enqueue(self, block: Block) -> None:
         self._blocks.append(block)
 
     def blocks(self, clear: bool = True) -> Sequence[Block]:

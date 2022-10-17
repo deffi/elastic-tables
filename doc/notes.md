@@ -1,7 +1,5 @@
 Next:
-  * Block splitter, line splitter: consistent interface
-  * Type annotations
-  * Inspections
+  * Block splitter, line splitter, filter: consistent interface
   * Create package
   * Publish package
   * Auto-publish via GitHub actions?

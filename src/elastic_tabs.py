@@ -1,13 +1,13 @@
 from pathlib import Path
 import sys
-from typing import Optional
+from typing import Optional, TextIO
 
 import typer
 
 from elastic_tabs.filter import StreamFilter
 
 
-def do_filter(file):
+def do_filter(file: TextIO) -> None:
     f = StreamFilter(sys.stdout)
 
     # Don't read the whole thing at once so we can use it in a shell
@@ -20,7 +20,7 @@ def do_filter(file):
     f.flush()
 
 
-def main(file_name: Optional[Path] = typer.Argument(None)):
+def main(file_name: Optional[Path] = typer.Argument(None)) -> None:
     if file_name is None:
         do_filter(sys.stdin)
     else:
