@@ -4,7 +4,7 @@ from typing import Optional
 
 import typer
 
-from elastic_tabs import StreamFilter
+from elastic_tabs.filter import StreamFilter
 
 
 def do_filter(file):

@@ -1,5 +1,3 @@
-from typing import Iterator, Iterable
-
 from elastic_tabs.model import Table, Row, Block, Line
 
 

@@ -14,7 +14,8 @@ class Renderer:
         return text.ljust(width)
 
     def render_row(self, row: Row, widths: Sequence[int]) -> str:
-        return "".join(self.render_cell(cell, width) for cell, width in zip (row.cells, widths)) + row.line_terminator
+        rendered_cells = (self.render_cell(cell, width) for cell, width in zip (row.cells, widths))
+        return "".join(rendered_cells) + row.line_terminator
 
     def render(self, table: Table) -> Iterator[str]:
         columns_widths = table.column_widths()
