@@ -10,12 +10,9 @@ from elastic_tabs.filter import StreamFilter
 def do_filter(file: TextIO) -> None:
     f = StreamFilter(sys.stdout)
 
-    # Don't read the whole thing at once so we can use it in a shell
-    # pipeline
-    # TODO does this recognize the same line breaks as str.splitlines?
-    # TODO how does this treat trailing newlines?
-    for line in file:
-        print(line.strip(), file=f)
+    # Read line by line so we can use it in a shell pipeline without blocking
+    while (string := file.readline()) != "":
+        f.write(string)
 
     f.flush()
 
