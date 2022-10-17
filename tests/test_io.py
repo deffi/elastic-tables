@@ -2,7 +2,7 @@ import sys
 import unittest
 import subprocess
 
-import elastic_tabs.stdio
+import elastic_tabs.io
 
 
 class MyTestCase(unittest.TestCase):
@@ -14,8 +14,8 @@ class MyTestCase(unittest.TestCase):
 if __name__ == '__main__':
     # unittest.main()
 
-    import elastic_tabs.stdio
+    import elastic_tabs.io
 
-    elastic_tabs.stdio.install()
+    elastic_tabs.io.install()
     print("foo\tb")
     print("f\tbar")
