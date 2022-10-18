@@ -1,10 +1,11 @@
 Next:
-  * TODOs
   * Create package
   * Publish package
   * Auto-publish via GitHub actions?
-
-Tests:
+  * Stdin: without universal newlines
+    https://stackoverflow.com/questions/50476200/changing-the-way-stdin-stdout-is-opened-in-python-3
+    https://discuss.python.org/t/forcing-sys-stdin-stdout-stderr-encoding-newline-behavior-programmatically/15437
+  * TODOs in tests
   * Different line separators (\n, \r\n)
 
 Render options:
