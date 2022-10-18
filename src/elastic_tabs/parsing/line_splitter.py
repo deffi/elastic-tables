@@ -12,7 +12,7 @@ class LineSplitter:
         self._input_buffer = ""
         self._result_buffer: List[Line] = []
 
-        self.callback: Callback = callback or self._result_buffer.extend
+        self.callback: Callback = callback or self._buffer_lines
 
     ##################
     # Public interface
@@ -33,6 +33,9 @@ class LineSplitter:
     ###################
     # Internal buffer #
     ###################
+
+    def _buffer_lines(self, lines: Sequence[Line]):
+        self._result_buffer.extend(lines)
 
     def lines(self, clear: bool = True) -> Sequence[Line]:
         lines = self._result_buffer
