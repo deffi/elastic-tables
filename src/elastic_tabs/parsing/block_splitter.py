@@ -15,7 +15,7 @@ class BlockSplitter:
         self._input_buffer: List[Line] = []
         self._result_buffer: List[Block] = []
 
-        self._callback: Callback = callback or self._result_buffer.append
+        self._callback: Callback = callback or self._buffer_block
 
     ##############
     # Processing #
@@ -61,6 +61,9 @@ class BlockSplitter:
     ###################
     # Internal buffer #
     ###################
+
+    def _buffer_block(self, block: Block):
+        self._result_buffer.append(block)
 
     def blocks(self, clear: bool = True) -> Sequence[Block]:
         blocks = self._result_buffer

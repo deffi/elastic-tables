@@ -14,6 +14,11 @@ baz = Line("bar", "\n")
 class BlockSplitterTest(unittest.TestCase):
     def test_vertical_tab_beginning(self):
         splitter = BlockSplitter()
+
+        splitter.input([foo, v_bar, baz])
+        splitter.flush()
+        self.assertEqual([Block([foo]), Block([bar, baz])], splitter.blocks())
+
         splitter.input([foo, v_bar, baz])
         splitter.flush()
         self.assertEqual([Block([foo]), Block([bar, baz])], splitter.blocks())
