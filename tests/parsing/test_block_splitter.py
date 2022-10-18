@@ -38,6 +38,17 @@ class BlockSplitterTest(unittest.TestCase):
         self.assertEqual([Block([foo, blank]), Block([baz])], splitter.blocks())
         self.assertEqual([], splitter.blocks())
 
+    def test_flush(self):
+        splitter = BlockSplitter()
+        self.assertEqual([], splitter.blocks())
+
+        splitter.flush()
+        self.assertEqual([], splitter.blocks())
+
+        splitter.flush()
+        splitter.flush()
+        self.assertEqual([], splitter.blocks())
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -55,8 +55,9 @@ class BlockSplitter:
             self._add_line(line)
 
     def flush(self) -> None:
-        self._callback(Block(self._input_buffer))
-        self._input_buffer = []
+        if len(self._input_buffer) != 0:
+            self._callback(Block(self._input_buffer))
+            self._input_buffer = []
 
     ###################
     # Internal buffer #

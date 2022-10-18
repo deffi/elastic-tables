@@ -24,7 +24,6 @@ class LineSplitter:
         self.callback(lines)
 
     def flush(self) -> None:
-        # TODO similar condition in block splitter?
         if self._input_buffer != "":
             self.callback([Line(self._input_buffer, "")])
             self._input_buffer = ""
