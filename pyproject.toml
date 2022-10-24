@@ -1,5 +1,15 @@
-[tool.pytest.ini_options]
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
 
-pythonpath = [
-   "src"
-]
+[project]
+name = "elastic_tabs"
+authors = [{name = "Martin Herrmann", email = "martin@famherrmann.de"}]
+readme = "README.md"
+dynamic = ["version", "description"]
+
+[project.urls]
+Home = "https://github.com/deffi/elastic-tabs"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
