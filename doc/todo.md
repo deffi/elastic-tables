@@ -8,6 +8,7 @@ Next:
     * We my want to allow cells to start/end with whitespace
 
 Project:
+  * Complete pyproject.toml
   * Rename? With cell alignment, it goes beyond elastic tabs
     * tab-les / tab_les
     * elastic-tables
