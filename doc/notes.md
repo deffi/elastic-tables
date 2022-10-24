@@ -1,38 +1,23 @@
 Next:
-  * Create package
-  * Publish package
-  * Auto-publish via GitHub actions?
   * Stdin: without universal newlines
     https://stackoverflow.com/questions/50476200/changing-the-way-stdin-stdout-is-opened-in-python-3
     https://discuss.python.org/t/forcing-sys-stdin-stdout-stderr-encoding-newline-behavior-programmatically/15437
   * TODOs in tests
   * Different line separators (\n, \r\n)
+  * Align cells (based on leading/trailing whitespace)?
+    * We my want to allow cells to start/end with whitespace
 
-Render options:
-  * Keep trailing whitespace (always pad last column, might be right-padded)
-  * Extend rows (same number of cells in each row)
-  * Right-align numeric cells (configurable)
-    Decimals can be aligned at the point or not at all
-  * Column separator
-
-Block separators (options):
-  * Blank line
-    * Line with only whitespace counts as blank?
-    * Can we have a blank line without causing a block break?
-  * Vertical tab or form feed at the end of / somewhere in a line
-  * Line without a column separator
-    * More precisely, split before a line if its "has column separator" is
-      different from the previous line
+Project:
+  * Move script to scripts/, it name-collides with the package
+  * Rename? With cell alignment, it goes beyond elastic tabs
+    * tab-les / tab_les
+    * elastic-tables
+  * Create package
+  * Publish package
+  * Auto-publish via GitHub actions
 
 Alignment:
-  * Types:
-    * Left
-    * Right
-    * Center
-    * On character
   * Control:
-    * Setup functions
-    * Escape sequences? At least for left-align?
     * Keep trailing spaces from original?
     * Consider spaces when doing alignment?
 
@@ -46,3 +31,19 @@ Future work:
     https://docs.python.org/3/library/functions.html#open
   * Support ANSI escape codes (currently, they probably mess up the formatting)
   * Allow coloring columns or cells
+  * Advanced block splitting (configurable):
+    * Blank line (only whitespace)
+    * Empty line (contains nothing)
+    * Line without a column separator
+      * More precisely, split before a line if its "has column separator" is
+        different from the previous line
+  * Advanced cell formatting:
+    * Explicitly specify formatter for column by index
+    * Auto-detect numeric colums (/-?\d+)
+    * Align on character (e. g. decimals)
+    * Keep leading/trailing whitespace in cell
+    * Treat whitespace like text for alignment
+  * Advanced table formatting:
+    * Column separator
+    * Preserve trailing whitespace
+    * Extend all rows to same number of cells
