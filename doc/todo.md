@@ -8,7 +8,6 @@ Next:
     * We my want to allow cells to start/end with whitespace
 
 Project:
-  * Move script to scripts/, it name-collides with the package
   * Rename? With cell alignment, it goes beyond elastic tabs
     * tab-les / tab_les
     * elastic-tables
