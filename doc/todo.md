@@ -6,6 +6,7 @@ Next:
   * Different line separators (\n, \r\n)
   * Align cells (based on leading/trailing whitespace)?
     * We my want to allow cells to start/end with whitespace
+  * Unconditionally provide elastic_tabs.io.stdio/stderr
 
 Project:
   * Rename? With cell alignment, it goes beyond elastic tabs

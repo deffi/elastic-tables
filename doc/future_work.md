@@ -25,3 +25,10 @@ Advanced block splitting (configurable):
 * Column separator
 * Preserve trailing whitespace
 * Extend all rows to same number of cells
+
+Global install:
+  * Allow uninstall - if something replaced stdout in the meantime, we can't
+    really do that, but we should be able to replace it with a passthrough. If
+    it's re-installed later, we can re-replace it instead of adding another
+    wrapper
+  * Provide context manager
