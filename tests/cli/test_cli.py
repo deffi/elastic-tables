@@ -4,12 +4,12 @@ import sys
 import unittest
 
 
-class ElasticTabsTest(unittest.TestCase):
+class CliTest(unittest.TestCase):
     """We use text for the output so we get a better diff in the IDE.
     """
 
-    script_path = Path(__file__).parent.parent / "src" / "elastic_tabs" / "cli" / "cli.py"
-    test_data_path = Path(__file__).parent / "data"
+    script_path = Path(__file__).parent.parent.parent / "src" / "elastic_tabs" / "cli" / "cli.py"
+    test_data_path = Path(__file__).parent.parent / "data"
 
     def test_file(self):
         input_path = self.test_data_path / "test1_in.txt"
