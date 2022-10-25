@@ -15,3 +15,4 @@ Trailing empty lines:
   * string.splitlines recognizes too many line endings
   * Maybe we could use StringIO.readline 
 
+Python 3.8 is required for the walrus operator.
