@@ -8,7 +8,7 @@ class ElasticTabsTest(unittest.TestCase):
     """We use text for the output so we get a better diff in the IDE.
     """
 
-    script_path = Path(__file__).parent.parent / "scripts" / "elastic-tabs.py"
+    script_path = Path(__file__).parent.parent / "src" / "elastic_tabs" / "cli" / "cli.py"
     test_data_path = Path(__file__).parent / "data"
 
     def test_file(self):

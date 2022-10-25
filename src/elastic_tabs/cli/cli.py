@@ -17,7 +17,7 @@ def do_filter(file: TextIO) -> None:
     f.flush()
 
 
-def main(file_name: Optional[Path] = typer.Argument(None)) -> None:
+def cli(file_name: Optional[Path] = typer.Argument(None)) -> None:
     if file_name is None:
         do_filter(sys.stdin)
     else:
@@ -25,5 +25,9 @@ def main(file_name: Optional[Path] = typer.Argument(None)) -> None:
             do_filter(file)
 
 
+def main():
+    typer.run(cli)
+
+
 if __name__ == "__main__":
-    typer.run(main)
+    main()
