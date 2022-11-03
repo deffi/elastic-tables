@@ -12,20 +12,22 @@ class CliTest(unittest.TestCase):
     test_data_path = Path(__file__).parent.parent / "data"
 
     def test_file(self):
-        input_path = self.test_data_path / "line-break_crlf_in.txt"
-        expected_path = self.test_data_path / "line-break_crlf_expected.txt"
+        for prefix in ["line-break_crlf", "line-break_lf"]:
+            input_path = self.test_data_path / f"{prefix}_in.txt"
+            expected_path = self.test_data_path / f"{prefix}_expected.txt"
 
-        output = subprocess.check_output([sys.executable, self.script_path, input_path], text=True)
-        self.assertEqual(expected_path.read_text(), output)
+            output = subprocess.check_output([sys.executable, self.script_path, input_path], text=True)
+            self.assertEqual(expected_path.read_text(), output)
 
     def test_stdin(self):
-        input_path = self.test_data_path / "line-break_crlf_in.txt"
-        expected_path = self.test_data_path / "line-break_crlf_expected.txt"
+        for prefix in ["line-break_crlf", "line-break_lf"]:
+            input_path = self.test_data_path / f"{prefix}_in.txt"
+            expected_path = self.test_data_path / f"{prefix}_expected.txt"
 
-        # Pass the input as text because the text parameter applies to both
-        # input and output
-        output = subprocess.check_output([sys.executable, self.script_path], input=input_path.read_text(), text=True)
-        self.assertEqual(expected_path.read_text(), output)
+            # Pass the input as text because the text parameter applies to both
+            # input and output
+            output = subprocess.check_output([sys.executable, self.script_path], input=input_path.read_text(), text=True)
+            self.assertEqual(expected_path.read_text(), output)
 
     # TODO test that after the first chunk, the first table is output before the
     # second chunk is complete
