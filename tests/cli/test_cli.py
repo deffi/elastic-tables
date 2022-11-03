@@ -12,15 +12,15 @@ class CliTest(unittest.TestCase):
     test_data_path = Path(__file__).parent.parent / "data"
 
     def test_file(self):
-        input_path = self.test_data_path / "test1_in.txt"
-        expected_path = self.test_data_path / "test1_expected.txt"
+        input_path = self.test_data_path / "line-break_crlf_in.txt"
+        expected_path = self.test_data_path / "line-break_crlf_expected.txt"
 
         output = subprocess.check_output([sys.executable, self.script_path, input_path], text=True)
         self.assertEqual(expected_path.read_text(), output)
 
     def test_stdin(self):
-        input_path = self.test_data_path / "test1_in.txt"
-        expected_path = self.test_data_path / "test1_expected.txt"
+        input_path = self.test_data_path / "line-break_crlf_in.txt"
+        expected_path = self.test_data_path / "line-break_crlf_expected.txt"
 
         # Pass the input as text because the text parameter applies to both
         # input and output
