@@ -1,4 +1,3 @@
-from pathlib import Path
 import subprocess
 import sys
 import unittest
@@ -18,12 +17,12 @@ class CliTest(unittest.TestCase):
                 self.assertEqual(expected_text, output)
 
     def test_stdin(self):
-        args = [sys.executable, cli.__file__]
         for prefix, input_path, expected_text in test_cases():
             with self.subTest(prefix):
                 # Pass the input as text because the text parameter applies to both
                 # input and output
-                output = subprocess.check_output(args, input=input_path.read_text(), text=True)
+                input_ = input_path.read_text()
+                output = subprocess.check_output([sys.executable, cli.__file__], input=input_, text=True)
                 self.assertEqual(expected_text, output)
 
     # TODO test that after the first chunk, the first table is output before the
