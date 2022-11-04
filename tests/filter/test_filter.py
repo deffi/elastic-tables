@@ -3,6 +3,8 @@ from pathlib import Path
 
 from elastic_tabs.filter import Filter
 
+from data import test_cases
+
 
 class FilterTest(unittest.TestCase):
     def test_splitting(self):
@@ -27,10 +29,12 @@ class FilterTest(unittest.TestCase):
     def test_filter_file(self):
         testdata = Path(__file__).parent.parent / "data"
 
-        input_ = (testdata / "line-break_crlf_in.txt").read_text()
-        expected = (testdata / "line-break_crlf_expected.txt").read_text()
+        for prefix, input_path, expected_text in test_cases():
+            with self.subTest(prefix):
+                input_ = input_path.read_text()
+                expected = expected_text
 
-        self.assertEqual(expected, "".join(Filter.filter(input_)))
+                self.assertEqual(expected, "".join(Filter.filter(input_)))
 
 
 if __name__ == '__main__':
