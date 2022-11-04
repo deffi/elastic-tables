@@ -14,11 +14,10 @@ class CliTest(unittest.TestCase):
 
     def _test_cases(self) -> Iterator[Tuple[Path, str]]:
         """Yields input_path, expected_text"""
-        for prefix in ["line-break_crlf", "line-break_lf"]:
+        for input_path in self.test_data_path.glob("*_in.txt"):
+            prefix = input_path.stem.removesuffix("_in")
             with self.subTest(prefix):
-                input_path = self.test_data_path / f"{prefix}_in.txt"
-                expected_path = self.test_data_path / f"{prefix}_expected.txt"
-
+                expected_path = input_path.with_stem(f"{prefix}_expected")
                 yield input_path, expected_path.read_text()
 
     def test_file(self):
