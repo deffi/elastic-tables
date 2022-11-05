@@ -32,3 +32,7 @@ Global install:
     it's re-installed later, we can re-replace it instead of adding another
     wrapper
   * Provide context manager
+
+Escape sequences:
+  * Which escape characters are easily accessible?
+  * Which unicode escape characters exist?
