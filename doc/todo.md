@@ -1,9 +1,6 @@
 Next:
-  * Stdin: without universal newlines
-    https://stackoverflow.com/questions/50476200/changing-the-way-stdin-stdout-is-opened-in-python-3
-    https://discuss.python.org/t/forcing-sys-stdin-stdout-stderr-encoding-newline-behavior-programmatically/15437
+  * Don't enumerate test data, use explicitly - we may need different options
   * TODOs in tests
-  * Different line separators (\n, \r\n)
   * Align cells (based on leading/trailing whitespace)?
     * We my want to allow cells to start/end with whitespace
   * Unconditionally provide elastic_tabs.io.stdio/stderr

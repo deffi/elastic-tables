@@ -18,10 +18,13 @@ def do_filter(file: TextIO) -> None:
 
 
 def cli(file_name: Optional[Path] = typer.Argument(None)) -> None:
+    sys.stdout.reconfigure(newline='')
+
     if file_name is None:
+        sys.stdin.reconfigure(newline='')
         do_filter(sys.stdin)
     else:
-        with open(file_name, "r") as file:
+        with open(file_name, "r", newline='') as file:
             do_filter(file)
 
 
