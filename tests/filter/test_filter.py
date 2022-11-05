@@ -3,7 +3,7 @@ from pathlib import Path
 
 from elastic_tabs.filter import Filter
 
-from data import test_cases
+import data as test_data
 
 
 class FilterTest(unittest.TestCase):
@@ -26,15 +26,17 @@ class FilterTest(unittest.TestCase):
     def test_filter(self):
         self.assertEqual("foob  \nb  bar", Filter.filter("foo\tb\nb\tbar"))
 
+    def _test_filter_file(self, prefix: str):
+        input_path, expected_path = test_data.test_case(prefix)
+
+        input_ = input_path.read_text()
+        expected = expected_path.read_text()
+
+        self.assertEqual(expected, "".join(Filter.filter(input_)))
+
     def test_filter_file(self):
-        testdata = Path(__file__).parent.parent / "data"
-
-        for prefix, input_path, expected_path in test_cases():
-            with self.subTest(prefix):
-                input_ = input_path.read_text()
-                expected = expected_path.read_text()
-
-                self.assertEqual(expected, "".join(Filter.filter(input_)))
+        self._test_filter_file("line-break_lf")
+        self._test_filter_file("line-break_crlf")
 
 
 if __name__ == '__main__':

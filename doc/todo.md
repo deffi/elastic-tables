@@ -1,5 +1,4 @@
 Next:
-  * Don't enumerate test data, use explicitly - we may need different options
   * TODOs in tests
   * Align cells (based on leading/trailing whitespace)?
     * We my want to allow cells to start/end with whitespace
