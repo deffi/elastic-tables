@@ -29,10 +29,10 @@ class FilterTest(unittest.TestCase):
     def test_filter_file(self):
         testdata = Path(__file__).parent.parent / "data"
 
-        for prefix, input_path, expected_text in test_cases():
+        for prefix, input_path, expected_path in test_cases():
             with self.subTest(prefix):
                 input_ = input_path.read_text()
-                expected = expected_text
+                expected = expected_path.read_text()
 
                 self.assertEqual(expected, "".join(Filter.filter(input_)))
 
