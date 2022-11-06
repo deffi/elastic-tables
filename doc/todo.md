@@ -6,4 +6,3 @@ How to handle output options?
     * when rendering -> cell stores original contents
 
 TODOs in tests
-  
