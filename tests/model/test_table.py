@@ -1,3 +1,4 @@
+import re
 import unittest
 
 from elastic_tables.model import Table, Row
@@ -24,6 +25,15 @@ class RenderTest(unittest.TestCase):
 
         # Multiple rows (different number of cells)
         self.assertEqual([3, 2], Table([Row(["a", "bb"], "\n"), Row(["ccc"], "\n")]).column_widths())
+
+    def test_columns_match(self):
+        table = Table([
+            Row(["a",  "1",  "1"], "\n"),
+            Row(["aa", "11", "a"], "\n"),
+        ])
+
+        numeric = re.compile(r'\d+')
+        self.assertEqual([False, True, False], table.columns_match(numeric))
 
 
 if __name__ == '__main__':
