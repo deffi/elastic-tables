@@ -63,6 +63,7 @@ Escape sequences:
   * Which unicode escape characters exist?
 
 I/O:
+  * Open output file
   * Unconditionally provide elastic_tables.io.stdio/stderr
     But with what settings? Probably only makes sense with some kind of default
     configuration

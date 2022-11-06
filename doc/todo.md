@@ -1,12 +1,9 @@
-Next:
-  * Align numerical cells
-  * TODOs in tests
+How to handle output options?
+  * Individual properties in renderer(/others?)
+  * OutputOptions class that is passed into renderer -> stateless renderer!
+  * Perform whitespace interpretation (for alignment)
+    * when the cell is create -> cell stores trimmed contents
+    * when rendering -> cell stores original contents
 
-
-I/O:
-  * Open output file
-
-Alignment:
-  * Control:
-    * Keep trailing spaces from original?
-    * Consider spaces when doing alignment?
+TODOs in tests
+  
