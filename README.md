@@ -1,7 +1,7 @@
-# elastic-tabs
+# tab-les
 
-Elastic tabstops for text output
+Format text using elastic tabstops
 
-[![Python package](https://github.com/deffi/elastic-tabs/actions/workflows/python-package.yml/badge.svg)](https://github.com/deffi/elastic-tabs/actions/workflows/python-package.yml)
+[![Python package](https://github.com/deffi/tab-les/actions/workflows/python-package.yml/badge.svg)](https://github.com/deffi/tab-les/actions/workflows/python-package.yml)
 
 Required Python version is 3.8

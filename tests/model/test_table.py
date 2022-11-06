@@ -1,6 +1,6 @@
 import unittest
 
-from elastic_tabs.model import Table, Row
+from tab_les.model import Table, Row
 
 
 class RenderTest(unittest.TestCase):

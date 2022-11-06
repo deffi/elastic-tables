@@ -3,7 +3,7 @@ import subprocess
 import sys
 import unittest
 
-from elastic_tabs.cli import cli
+from tab_les.cli import cli
 import data as test_data
 
 

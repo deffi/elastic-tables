@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Sequence
 
-from elastic_tabs.model import Line
+from tab_les.model import Line
 
 
 @dataclass(frozen=True)

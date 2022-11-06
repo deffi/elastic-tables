@@ -1,4 +1,4 @@
-from elastic_tabs.model import Table, Row, Block, Line
+from tab_les.model import Table, Row, Block, Line
 
 
 class TableGenerator:

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from itertools import zip_longest
 from typing import Sequence, Iterator
 
-from elastic_tabs.model import Row
+from tab_les.model import Row
 
 
 @dataclass()

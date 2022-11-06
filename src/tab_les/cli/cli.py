@@ -4,7 +4,7 @@ from typing import Optional, TextIO
 
 import typer
 
-from elastic_tabs.filter import StreamFilter
+from tab_les.filter import StreamFilter
 
 
 def do_filter(file: TextIO) -> None:

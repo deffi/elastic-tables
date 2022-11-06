@@ -1,7 +1,7 @@
 from io import TextIOBase
 from typing import Any, IO
 
-from elastic_tabs.filter import Filter
+from tab_les.filter import Filter
 
 
 class StreamFilter(TextIOBase):

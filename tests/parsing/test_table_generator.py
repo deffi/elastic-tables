@@ -1,7 +1,7 @@
 import unittest
 
-from elastic_tabs.model import Table, Row, Block, Line
-from elastic_tabs.parsing import TableGenerator
+from tab_les.model import Table, Row, Block, Line
+from tab_les.parsing import TableGenerator
 
 
 class TableGeneratorTest(unittest.TestCase):

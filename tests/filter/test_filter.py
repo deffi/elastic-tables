@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from elastic_tabs.filter import Filter
+from tab_les.filter import Filter
 
 import data as test_data
 

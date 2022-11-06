@@ -1,7 +1,7 @@
 import unittest
 
-from elastic_tabs.model import Table, Row
-from elastic_tabs.rendering import Renderer
+from tab_les.model import Table, Row
+from tab_les.rendering import Renderer
 
 
 class RendererTest(unittest.TestCase):

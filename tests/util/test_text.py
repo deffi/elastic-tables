@@ -1,7 +1,7 @@
 import unittest
 
-from elastic_tabs.model import Line
-from elastic_tabs.util.text import split_lines
+from tab_les.model import Line
+from tab_les.util.text import split_lines
 
 
 class TextTest(unittest.TestCase):
