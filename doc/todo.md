@@ -35,10 +35,6 @@ Defaults for CLI:
 I/O:
   * Open output file
 
-Project:
-  * Publish package
-  * Auto-publish via GitHub actions
-
 Alignment:
   * Control:
     * Keep trailing spaces from original?
