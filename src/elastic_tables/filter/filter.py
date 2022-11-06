@@ -1,8 +1,8 @@
 from typing import Callable
 
-from tab_les.parsing import BlockSplitter, LineSplitter, TableGenerator
-from tab_les.model import Block
-from tab_les.rendering import Renderer
+from elastic_tables.parsing import BlockSplitter, LineSplitter, TableGenerator
+from elastic_tables.model import Block
+from elastic_tables.rendering import Renderer
 
 
 Callback = Callable[[str], None]

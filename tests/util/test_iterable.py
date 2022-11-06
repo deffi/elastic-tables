@@ -1,6 +1,6 @@
 import unittest
 
-from tab_les.util.iterable import grouper
+from elastic_tables.util.iterable import grouper
 
 
 class IterableTest(unittest.TestCase):

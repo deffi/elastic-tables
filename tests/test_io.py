@@ -2,7 +2,7 @@ import sys
 import unittest
 import subprocess
 
-import tab_les.io
+import elastic_tables.io
 
 
 class IoTest(unittest.TestCase):
@@ -14,8 +14,8 @@ class IoTest(unittest.TestCase):
 if __name__ == '__main__':
     # unittest.main()
 
-    import tab_les.io
+    import elastic_tables.io
 
-    tab_les.io.install()
+    elastic_tables.io.install()
     print("foo\tb")
     print("f\tbar")

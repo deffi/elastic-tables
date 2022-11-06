@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 
-name = "tab-les"
+name = "elastic-tables"
 readme = "README.md"
 requires-python = ">=3.8"
 license = {file="LICENSE"}
@@ -33,13 +33,13 @@ classifiers = [
 ]
 
 [project.urls]
-Source = "https://github.com/deffi/tab-les"
+Source = "https://github.com/deffi/elastic-tables"
 
 [project.scripts]
-tab-les = "tab_les.cli.cli:main"
+elastic-tables = "elastic_tables.cli.cli:main"
 
 [tool.flit.module]
-name = "tab_les"
+name = "elastic_tables"
 
 [tool.flit.sdist]
 exclude = [".github", ".idea"]

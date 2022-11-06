@@ -1,8 +1,8 @@
 import re
 from typing import Tuple, Iterator
 
-from tab_les.model import Line
-from tab_les.util.iterable import grouper
+from elastic_tables.model import Line
+from elastic_tables.util.iterable import grouper
 
 
 def split_lines(string: str) -> Tuple[Iterator[Line], str]:

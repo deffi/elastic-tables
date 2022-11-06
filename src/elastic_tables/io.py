@@ -1,6 +1,6 @@
 import sys
 
-from tab_les.filter import StreamFilter
+from elastic_tables.filter import StreamFilter
 
 stdout = None
 

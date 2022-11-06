@@ -1,7 +1,7 @@
 import unittest
 from io import StringIO
 
-from tab_les.filter import StreamFilter
+from elastic_tables.filter import StreamFilter
 
 
 class StreamFilterTest(unittest.TestCase):

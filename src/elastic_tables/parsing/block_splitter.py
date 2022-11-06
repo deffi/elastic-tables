@@ -1,7 +1,7 @@
 from dataclasses import replace
 from typing import Callable, Iterable, Sequence, List
 
-from tab_les.model import Line, Block
+from elastic_tables.model import Line, Block
 
 
 Callback = Callable[[Block], None]

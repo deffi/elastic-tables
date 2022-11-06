@@ -1,7 +1,7 @@
 Next:
   * Align cells (based on leading/trailing whitespace)?
     * We my want to allow cells to start/end with whitespace
-  * Unconditionally provide tab_les.io.stdio/stderr
+  * Unconditionally provide elastic_tables.io.stdio/stderr
   * TODOs in tests
 
 Cell alignment:
@@ -29,8 +29,8 @@ Limitations:
     leading/trailing whitespace, not even using nbsp. 
 
 Defaults for CLI:
-  * tab-les:  --whitespace align --align-numeric --keep-blank
-  * elastic-tabs: --whitespace keep
+  * elastic-tables:  --whitespace align --align-numeric --keep-blank
+  * elastic-tabstops: --whitespace keep
 
 I/O:
   * Open output file

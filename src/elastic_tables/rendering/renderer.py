@@ -1,6 +1,6 @@
 from typing import Sequence, Iterator
 
-from tab_les.model import Table, Row
+from elastic_tables.model import Table, Row
 
 
 class Renderer:

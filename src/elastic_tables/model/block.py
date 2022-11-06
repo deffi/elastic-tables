@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Sequence
 
-from tab_les.model import Line
+from elastic_tables.model import Line
 
 
 @dataclass(frozen=True)

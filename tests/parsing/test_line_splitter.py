@@ -1,7 +1,7 @@
 import unittest
 
-from tab_les.model import Line
-from tab_les.parsing import LineSplitter
+from elastic_tables.model import Line
+from elastic_tables.parsing import LineSplitter
 
 
 foo = Line("foo", "\n")

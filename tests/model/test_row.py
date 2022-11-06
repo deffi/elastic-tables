@@ -1,6 +1,6 @@
 import unittest
 
-from tab_les.model import Row, Line
+from elastic_tables.model import Row, Line
 
 
 class RowTest(unittest.TestCase):
