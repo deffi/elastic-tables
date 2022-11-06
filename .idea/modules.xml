@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/tab-les.iml" filepath="$PROJECT_DIR$/.idea/tab-les.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../elastic-tables/.idea/elastic-tables.iml" filepath="$PROJECT_DIR$/../elastic-tables/.idea/elastic-tables.iml" />
     </modules>
   </component>
 </project>
