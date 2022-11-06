@@ -38,6 +38,9 @@ Source = "https://github.com/deffi/tab-les"
 [project.scripts]
 tab-les = "tab_les.cli.cli:main"
 
+[tool.flit.module]
+name = "tab_les"
+
 [tool.flit.sdist]
 exclude = [".github", ".idea"]
 
