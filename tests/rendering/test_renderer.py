@@ -1,31 +1,16 @@
 import unittest
 
-from elastic_tables.model import Table, Row
+from elastic_tables.model import Table, Row, Cell
 from elastic_tables.rendering import Renderer
 
 
 class RendererTest(unittest.TestCase):
-    def test_render_cell(self):
-        # Empty string
-        self.assertEqual("", Renderer().render_cell("", 0, str.ljust))
-        self.assertEqual("    ", Renderer().render_cell("", 4, str.ljust))
-
-        # Pad
-        self.assertEqual("foo ", Renderer().render_cell("foo", 4, str.ljust))
-
-        # Fits
-        self.assertEqual("foo", Renderer().render_cell("foo", 3, str.ljust))
-
-        # Too long
-        with self.assertRaises(ValueError):
-            Renderer().render_cell("foobar", 4, str.ljust)
-
     def test_render_row(self):
         l = str.ljust
         r = str.rjust
-        self.assertEqual("a  foo  bc  \n", Renderer().render_row(Row(["a", "foo", "b", "c"], "\n"), [3, 5, 1, 3], [l, l, l, l]))
-        self.assertEqual("a    foobc  \n", Renderer().render_row(Row(["a", "foo", "b", "c"], "\n"), [3, 5, 1, 3], [l, r, l, l]))
-        self.assertEqual("  a  foob  c\n", Renderer().render_row(Row(["a", "foo", "b", "c"], "\n"), [3, 5, 1, 3], [r, r, r, r]))
+        self.assertEqual("a  foo  bc  \n", Renderer().render_row(Row([Cell("a"), Cell("foo"), Cell("b"), Cell("c")], "\n"), [3, 5, 1, 3], [l, l, l, l]))
+        self.assertEqual("a    foobc  \n", Renderer().render_row(Row([Cell("a"), Cell("foo"), Cell("b"), Cell("c")], "\n"), [3, 5, 1, 3], [l, r, l, l]))
+        self.assertEqual("  a  foob  c\n", Renderer().render_row(Row([Cell("a"), Cell("foo"), Cell("b"), Cell("c")], "\n"), [3, 5, 1, 3], [r, r, r, r]))
 
     def test_render_table(self):
         # Empty table
@@ -39,22 +24,22 @@ class RendererTest(unittest.TestCase):
             "foob  \n",  # TODO trailing tabs, yay or nay?
             "b  bar\n"],
             list(Renderer().render(Table([
-                Row(["foo", "b"], "\n"),
-                Row(["b", "bar"], "\n")]))))
+                Row([Cell("foo"), Cell("b")], "\n"),
+                Row([Cell("b"), Cell("bar")], "\n")]))))
 
         # Different column lengths
         self.assertEqual([
             "foob\n",
             "f  \n"],  # TODO extra space for second column, yay or nay?
             list(Renderer().render(Table([
-                Row(["foo", "b"], "\n"),
-                Row(["f"], "\n")]))))
+                Row([Cell("foo"), Cell("b")], "\n"),
+                Row([Cell("f")], "\n")]))))
 
     def test_align_numeric(self):
         table = Table([
-            Row(["a"  , "+1" , "222"], "\n"),
-            Row(["bb" , "333", "44" ], "\n"),
-            Row(["ccc", "55" , "d"  ], "\n"),
+            Row([Cell("a"  ), Cell("+1" ), Cell("222")], "\n"),
+            Row([Cell("bb" ), Cell("333"), Cell("44" )], "\n"),
+            Row([Cell("ccc"), Cell("55" ), Cell("d"  )], "\n"),
         ])
 
         renderer = Renderer()

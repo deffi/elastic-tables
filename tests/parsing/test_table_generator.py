@@ -1,6 +1,6 @@
 import unittest
 
-from elastic_tables.model import Table, Row, Block, Line
+from elastic_tables.model import Table, Row, Block, Line, Cell
 from elastic_tables.parsing import TableGenerator
 
 
@@ -9,7 +9,7 @@ class TableGeneratorTest(unittest.TestCase):
         self.assertEqual(Table([]), TableGenerator().table_from_block(Block([])))
 
     def test_blank(self):
-        self.assertEqual(Table([Row([""], "")]), TableGenerator().table_from_block(Block([
+        self.assertEqual(Table([Row([Cell("")], "")]), TableGenerator().table_from_block(Block([
             Line("", ""),
         ])))
 
@@ -21,9 +21,9 @@ class TableGeneratorTest(unittest.TestCase):
         ])
 
         expected = Table([
-            Row(["foo", "b"], "\n"),
-            Row(["or"], "\n"),
-            Row(["f", "bar"], "\n"),
+            Row([Cell("foo"), Cell("b")], "\n"),
+            Row([Cell("or")], "\n"),
+            Row([Cell("f"), Cell("bar")], "\n"),
         ])
 
         self.assertEqual(expected, TableGenerator().table_from_block(block))
