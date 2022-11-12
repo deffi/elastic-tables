@@ -48,6 +48,5 @@ class RendererTest(unittest.TestCase):
         self.assertEqual(["a   +1222\n", "bb 33344 \n", "ccc 55d  \n"], list(renderer.render(table)))
 
 
-
 if __name__ == '__main__':
     unittest.main()

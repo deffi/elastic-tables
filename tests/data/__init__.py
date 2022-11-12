@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Iterator, Tuple, Optional
+from typing import Tuple, Optional
 
 
 _root = Path(__file__).parent
