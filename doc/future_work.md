@@ -67,3 +67,7 @@ I/O:
   * Unconditionally provide elastic_tables.io.stdio/stderr
     But with what settings? Probably only makes sense with some kind of default
     configuration
+
+Formatting by escape codes:
+  * Probably best use backslash rather than ESC as escape character
+  * Alignment: \< left, \> right, \| center?
