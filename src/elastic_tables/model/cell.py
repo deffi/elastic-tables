@@ -9,7 +9,7 @@ AlignmentFunction = Callable[[str, int], str]
 @dataclass(frozen=True)
 class Cell:
     text: str
-    alignment: Optional[AlignmentFunction]
+    alignment: Optional[AlignmentFunction] = None
 
     def render(self, width: int, default_alignment: Optional[AlignmentFunction]) -> str:
         if len(self.text) > width:
@@ -17,3 +17,6 @@ class Cell:
 
         alignment = self.alignment or default_alignment or str.ljust
         return alignment(self.text, width)
+
+    def __len__(self):
+        return len(self.text)
