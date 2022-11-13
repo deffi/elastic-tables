@@ -16,6 +16,9 @@ class Row:
         cells = [Cell(text) for text in line.content.split(separator)]
         return cls(cells, line.terminator)
 
+    def __len__(self):
+        return len(self.cells)
+
     def render(self, widths: Sequence[int], alignments: Sequence[AlignmentFunction]) -> str:
         cell_width_alignment = zip(self.cells, widths, alignments)
         rendered_cells = (cell.render(width, alignment) for cell, width, alignment in cell_width_alignment)

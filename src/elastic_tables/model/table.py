@@ -21,7 +21,7 @@ class Table:
 
     def column_count(self) -> int:
         if self.rows:
-            return max(len(row.cells) for row in self.rows)
+            return max(len(row) for row in self.rows)
         else:
             return 0
 
