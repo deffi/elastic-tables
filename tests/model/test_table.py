@@ -1,4 +1,3 @@
-import re
 import unittest
 
 from elastic_tables.model import Table, Row, Cell, Block, Line, Column
