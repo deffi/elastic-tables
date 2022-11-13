@@ -30,7 +30,9 @@ class Filter:
 
     def _input_block(self, block: Block) -> None:
         table = Table.from_block(block)
-        text = table.render(self.align_numeric)
+        if self.align_numeric:
+            table = table.align_numeric()
+        text = table.render()
         self._callback("".join(text))
 
     ####################

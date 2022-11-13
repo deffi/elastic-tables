@@ -1,6 +1,7 @@
 import unittest
 
 from elastic_tables.model import Table, Row, Cell, Block, Line, Column
+from elastic_tables.util.alignment import left, right
 
 
 class RenderTest(unittest.TestCase):
@@ -96,6 +97,15 @@ class RenderTest(unittest.TestCase):
                 Row([Cell("foo"), Cell("b")], "\n"),
                 Row([Cell("f")], "\n")]).render()))
 
+    def test_numeric_alignment(self):
+        table = Table([
+            Row([Cell("a"  ), Cell("+1" ), Cell("222")], "\n"),
+            Row([Cell("bb" ), Cell("333"), Cell("44" )], "\n"),
+            Row([Cell("ccc"), Cell("55" ), Cell("d"  )], "\n"),
+        ])
+
+        self.assertEqual([left, right, left], table.numeric_alignment())
+
     def test_align_numeric(self):
         table = Table([
             Row([Cell("a"  ), Cell("+1" ), Cell("222")], "\n"),
@@ -103,8 +113,8 @@ class RenderTest(unittest.TestCase):
             Row([Cell("ccc"), Cell("55" ), Cell("d"  )], "\n"),
         ])
 
-        self.assertEqual(["a  +1 222\n", "bb 33344 \n", "ccc55 d  \n"], list(table.render(False)))
-        self.assertEqual(["a   +1222\n", "bb 33344 \n", "ccc 55d  \n"], list(table.render(True)))
+        self.assertEqual(["a  +1 222\n", "bb 33344 \n", "ccc55 d  \n"], list(table.render()))
+        self.assertEqual(["a   +1222\n", "bb 33344 \n", "ccc 55d  \n"], list(table.align_numeric().render()))
 
 
 if __name__ == '__main__':
