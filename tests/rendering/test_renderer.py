@@ -5,13 +5,6 @@ from elastic_tables.rendering import Renderer
 
 
 class RendererTest(unittest.TestCase):
-    def test_render_row(self):
-        l = str.ljust
-        r = str.rjust
-        self.assertEqual("a  foo  bc  \n", Renderer().render_row(Row([Cell("a"), Cell("foo"), Cell("b"), Cell("c")], "\n"), [3, 5, 1, 3], [l, l, l, l]))
-        self.assertEqual("a    foobc  \n", Renderer().render_row(Row([Cell("a"), Cell("foo"), Cell("b"), Cell("c")], "\n"), [3, 5, 1, 3], [l, r, l, l]))
-        self.assertEqual("  a  foob  c\n", Renderer().render_row(Row([Cell("a"), Cell("foo"), Cell("b"), Cell("c")], "\n"), [3, 5, 1, 3], [r, r, r, r]))
-
     def test_render_table(self):
         # Empty table
         self.assertEqual([], list(Renderer().render(Table([]))))
