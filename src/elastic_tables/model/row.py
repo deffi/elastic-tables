@@ -12,8 +12,8 @@ class Row:
     line_terminator: str
 
     @classmethod
-    def from_line(cls, line: Line) -> Row:
-        cells = [Cell(text) for text in line.content.split("\t")]
+    def from_line(cls, line: Line, separator: str = "\t") -> Row:
+        cells = [Cell(text) for text in line.content.split(separator)]
         return cls(cells, line.terminator)
 
     def render(self, widths: Sequence[int], alignments: Sequence[AlignmentFunction]) -> str:
