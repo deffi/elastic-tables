@@ -2,7 +2,6 @@ from typing import Callable
 
 from elastic_tables.parsing import BlockSplitter, LineSplitter, TableGenerator
 from elastic_tables.model import Block
-from elastic_tables.rendering import Renderer
 
 
 Callback = Callable[[str], None]
@@ -10,10 +9,11 @@ Callback = Callable[[str], None]
 
 class Filter:
     def __init__(self, callback: Callback = None):
+        self.align_numeric = False
+
         self._block_splitter = BlockSplitter(self._input_block)
         self._line_splitter = LineSplitter(self._block_splitter.input)
         self._table_generator = TableGenerator()
-        self._renderer = Renderer()
 
         self._callback = callback or self._buffer_result
         self._result_buffer = ""
@@ -31,7 +31,7 @@ class Filter:
 
     def _input_block(self, block: Block) -> None:
         table = self._table_generator.table_from_block(block)
-        text = self._renderer.render(table)
+        text = table.render(self.align_numeric)
         self._callback("".join(text))
 
     ####################

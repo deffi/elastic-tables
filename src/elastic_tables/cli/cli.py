@@ -9,7 +9,7 @@ from elastic_tables.filter import StreamFilter
 
 def do_filter(file: TextIO, align_numeric: bool) -> None:
     f = StreamFilter(sys.stdout)
-    f.filter._renderer.align_numeric = align_numeric  # TODO private
+    f.filter.align_numeric = align_numeric
 
     # Read line by line so we can use it in a shell pipeline without blocking
     while (string := file.readline()) != "":
