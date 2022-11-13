@@ -1,0 +1,4 @@
+lef 	 cen 	 rig
+ cen 	 rig	lef 
+ rig	lef 	 cen 
+xxxxxxx	yyyyyyy	zzzzzzz

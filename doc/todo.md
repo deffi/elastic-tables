@@ -1,5 +1,2 @@
-Table transforms:
-  * Numeric alignment
-  * Whitespace alignment
-
+TODOs in src
 TODOs in tests

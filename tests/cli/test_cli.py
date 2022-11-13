@@ -39,6 +39,11 @@ class CliTest(unittest.TestCase):
         self._test("align-numeric", ["--align-numeric"], "yes")
         self._test("align-numeric", ["--no-align-numeric"], "no")
 
+    def test_align_space(self):
+        self._test("align-space", [], "yes")
+        self._test("align-space", ["--align-space"], "yes")
+        self._test("align-space", ["--no-align-space"], "no")
+
     # TODO test that after the first chunk, the first table is output before the
     # second chunk is complete
 

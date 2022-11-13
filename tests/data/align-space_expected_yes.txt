@@ -1,0 +1,4 @@
+lef      cen      rig
+  cen      riglef    
+    riglef      cen  
+xxxxxxxyyyyyyyzzzzzzz
