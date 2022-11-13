@@ -1,9 +1,9 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from itertools import zip_longest
 import re
-from typing import Sequence, Iterator
+from typing import Sequence, Iterator, cast
 
-from elastic_tables.model import Row, Cell, Block, Column
+from elastic_tables.model import Row, Cell, Block, Column, AlignmentFunction
 from elastic_tables.util.alignment import left, right
 
 
@@ -13,6 +13,11 @@ numeric_pattern = re.compile(r'\s*[+-]?\d+\s*')
 @dataclass(frozen=True)
 class Table:
     rows: Sequence[Row]
+    column_alignment: Sequence[AlignmentFunction] = field(default=None)
+
+    def __post_init__(self):
+        if self.column_alignment is None:
+            object.__setattr__(self, "column_alignment", [None] * self.column_count())
 
     @classmethod
     def from_block(cls, block: Block, separator: str = "\t"):

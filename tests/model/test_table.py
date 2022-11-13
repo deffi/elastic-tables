@@ -4,6 +4,17 @@ from elastic_tables.model import Table, Row, Cell, Block, Line, Column
 
 
 class RenderTest(unittest.TestCase):
+    def test_column_alignment(self):
+        _ = Cell("")
+
+        # No rows
+        self.assertEqual([], Table([]).column_alignment)
+
+        # Single row with varying number of cells
+        self.assertEqual([], Table([Row([], "\n")]).column_alignment)
+        self.assertEqual([None], Table([Row([_], "\n")]).column_alignment)
+        self.assertEqual([None, None], Table([Row([_, _], "\n")]).column_alignment)
+
     def test_from_block(self):
         # Empty
         self.assertEqual(Table([]), Table.from_block(Block([])))
