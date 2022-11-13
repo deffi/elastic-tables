@@ -10,7 +10,7 @@ from elastic_tables.util.alignment import left, right
 numeric_pattern = re.compile(r'\s*[+-]?\d+\s*')
 
 
-@dataclass()
+@dataclass(frozen=True)
 class Table:
     rows: Sequence[Row]
 
