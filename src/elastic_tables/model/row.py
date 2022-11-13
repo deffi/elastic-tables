@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Sequence
+from dataclasses import dataclass, replace
+from typing import Sequence, Callable
 
 from elastic_tables.model import Line, Cell, AlignmentFunction
 
@@ -23,3 +23,7 @@ class Row:
         cell_width_alignment = zip(self.cells, widths, alignments)
         rendered_cells = (cell.render(width, alignment) for cell, width, alignment in cell_width_alignment)
         return "".join(rendered_cells) + self.line_terminator
+
+    def map_cells(self, function: Callable[[Cell], Cell]) -> Row:
+        cells = [function(cell) for cell in self.cells]
+        return replace(self, cells=cells)

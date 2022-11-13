@@ -1,3 +1,4 @@
+from dataclasses import replace
 import unittest
 
 from elastic_tables.model import Row, Line, Cell
@@ -13,6 +14,14 @@ class RowTest(unittest.TestCase):
         self.assertEqual("a  foo  bc  \n", row.render([3, 5, 1, 3], [L, L, L, L]))
         self.assertEqual("a    foobc  \n", row.render([3, 5, 1, 3], [L, R, L, L]))
         self.assertEqual("  a  foob  c\n", row.render([3, 5, 1, 3], [R, R, R, R]))
+
+    def test_map_cells(self):
+        def upper(cell: Cell) -> Cell:
+            return replace(cell, text=cell.text.upper())
+
+        row = Row([Cell("a"), Cell("foo"), Cell("b")], "\n")
+        row = row.map_cells(upper)
+        self.assertEqual(Row([Cell("A"), Cell("FOO"), Cell("B")], "\n"), row)
 
 
 if __name__ == '__main__':
