@@ -3,7 +3,7 @@ from itertools import zip_longest
 import re
 from typing import Sequence, Iterator, Pattern
 
-from elastic_tables.model import Row, Cell, Block
+from elastic_tables.model import Row, Cell, Block, Column
 from elastic_tables.util.alignment import left, right
 
 
@@ -19,27 +19,17 @@ class Table:
         rows = [Row.from_line(line, separator) for line in block.lines]
         return Table(rows)
 
-    def columns(self) -> Iterator[Sequence[Cell]]:
-        return zip_longest(*(row.cells for row in self.rows), fillvalue=Cell(""))
-
-    @staticmethod
-    def column_width(column: Sequence[Cell]) -> int:
-        if column:
-            return max(len(cell) for cell in column)
-        else:
-            return 0
-
-    @staticmethod
-    def column_matches(column: Sequence[Cell], pattern: Pattern) -> bool:
-        return all(pattern.fullmatch(cell.text) for cell in column)
+    def columns(self) -> Iterator[Column]:
+        all_cells = zip_longest(*(row.cells for row in self.rows), fillvalue=Cell(""))
+        return (Column(list(column_cells)) for column_cells in all_cells)
 
     def column_widths(self) -> Sequence[int]:
         columns = self.columns()
-        return [self.column_width(column) for column in columns]
+        return [column.width() for column in columns]
 
     def columns_match(self, pattern: Pattern) -> Sequence[bool]:
         columns = self.columns()
-        return [self.column_matches(column, pattern) for column in columns]
+        return [column.matches(pattern) for column in columns]
 
     def render(self, align_numeric: bool = False) -> Iterator[str]:
         columns_widths = self.column_widths()

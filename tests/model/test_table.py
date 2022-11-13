@@ -1,7 +1,7 @@
 import re
 import unittest
 
-from elastic_tables.model import Table, Row, Cell, Block, Line
+from elastic_tables.model import Table, Row, Cell, Block, Line, Column
 
 
 class RenderTest(unittest.TestCase):
@@ -28,35 +28,24 @@ class RenderTest(unittest.TestCase):
 
         self.assertEqual(expected, Table.from_block(block))
 
-    def test_column_width(self):
-        self.assertEqual(0, Table.column_width([]))
-        self.assertEqual(0, Table.column_width([Cell("")]))
-        self.assertEqual(0, Table.column_width([Cell(""), Cell(""), Cell("")]))
-        self.assertEqual(1, Table.column_width([Cell("a")]))
-        self.assertEqual(3, Table.column_width([Cell("a"), Cell("aaa"), Cell(""), Cell("aa")]))
+    def test_columns(self):
+        a = Cell("a")
+        b = Cell("b")
+        c = Cell("c")
+        _ = Cell("")
 
-    def test_column_widths(self):
         # No rows
-        self.assertEqual([], Table([]).column_widths())
+        self.assertEqual([], list(Table([]).columns()))
 
         # Rows with no cells each
-        self.assertEqual([], Table([Row([], "\n")]).column_widths())
-        self.assertEqual([], Table([Row([], "\n"), Row([], "\n")]).column_widths())
+        self.assertEqual([], list(Table([Row([], "\n")]).columns()))
+        self.assertEqual([], list(Table([Row([], "\n"), Row([], "\n")]).columns()))
 
         # Single row
-        self.assertEqual([1], Table([Row([Cell("a")], "\n")]).column_widths())
+        self.assertEqual([Column([a])], list(Table([Row([a], "\n")]).columns()))
 
         # Multiple rows (different number of cells)
-        self.assertEqual([3, 2], Table([Row([Cell("a"), Cell("bb")], "\n"), Row([Cell("ccc")], "\n")]).column_widths())
-
-    def test_columns_match(self):
-        table = Table([
-            Row([Cell("a"),  Cell("1"),  Cell("1")], "\n"),
-            Row([Cell("aa"), Cell("11"), Cell("a")], "\n"),
-        ])
-
-        numeric = re.compile(r'\d+')
-        self.assertEqual([False, True, False], table.columns_match(numeric))
+        self.assertEqual([Column([a, c]), Column([b, _])], list(Table([Row([a, b], "\n"), Row([c], "\n")]).columns()))
 
     def test_render(self):
         # Empty table
