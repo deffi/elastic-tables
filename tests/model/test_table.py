@@ -1,10 +1,33 @@
 import re
 import unittest
 
-from elastic_tables.model import Table, Row, Cell
+from elastic_tables.model import Table, Row, Cell, Block, Line
 
 
 class RenderTest(unittest.TestCase):
+    def test_from_block(self):
+        # Empty
+        self.assertEqual(Table([]), Table.from_block(Block([])))
+
+        # Blank
+        self.assertEqual(Table([Row([Cell("")], "")]), Table.from_block(Block([
+            Line("", ""),
+        ])))
+
+        block = Block([
+            Line("foo\tb", "\n"),
+            Line("or", "\n"),
+            Line("f\tbar", "\n"),
+        ])
+
+        expected = Table([
+            Row([Cell("foo"), Cell("b")], "\n"),
+            Row([Cell("or")], "\n"),
+            Row([Cell("f"), Cell("bar")], "\n"),
+        ])
+
+        self.assertEqual(expected, Table.from_block(block))
+
     def test_column_width(self):
         self.assertEqual(0, Table.column_width([]))
         self.assertEqual(0, Table.column_width([Cell("")]))

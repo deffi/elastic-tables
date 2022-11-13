@@ -3,7 +3,7 @@ from itertools import zip_longest
 import re
 from typing import Sequence, Iterator, Pattern
 
-from elastic_tables.model import Row, Cell
+from elastic_tables.model import Row, Cell, Block
 
 
 numeric_pattern = re.compile(r'\s*[+-]?\d+\s*')
@@ -12,6 +12,11 @@ numeric_pattern = re.compile(r'\s*[+-]?\d+\s*')
 @dataclass()
 class Table:
     rows: Sequence[Row]
+
+    @classmethod
+    def from_block(cls, block: Block, separator: str = "\t"):
+        rows = [Row.from_line(line, separator) for line in block.lines]
+        return Table(rows)
 
     def columns(self) -> Iterator[Sequence[Cell]]:
         return zip_longest(*(row.cells for row in self.rows), fillvalue=Cell(""))

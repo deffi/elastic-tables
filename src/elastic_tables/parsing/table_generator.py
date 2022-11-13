@@ -8,5 +8,4 @@ class TableGenerator:
         pass
 
     def table_from_block(self, block: Block) -> Table:
-        rows = (Row.from_line(line, self.separator) for line in block.lines)
-        return Table(list(rows))
+        return Table.from_block(block, self.separator)
