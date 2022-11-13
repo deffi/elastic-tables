@@ -23,21 +23,17 @@ class Table:
         all_cells = zip_longest(*(row.cells for row in self.rows), fillvalue=Cell(""))
         return (Column(list(column_cells)) for column_cells in all_cells)
 
-    def column_widths(self) -> Sequence[int]:
-        columns = self.columns()
-        return [column.width() for column in columns]
-
     def columns_match(self, pattern: Pattern) -> Sequence[bool]:
         columns = self.columns()
         return [column.matches(pattern) for column in columns]
 
     def render(self, align_numeric: bool = False) -> Iterator[str]:
-        columns_widths = self.column_widths()
+        column_widths = [column.width() for column in self.columns()]
 
         if align_numeric:
             column_is_numeric = self.columns_match(numeric_pattern)
             default_columns_alignment = [right if numeric else left for numeric in column_is_numeric]
         else:
-            default_columns_alignment = [left] * len(columns_widths)
+            default_columns_alignment = [left] * len(column_widths)
 
-        return (row.render(columns_widths, default_columns_alignment) for row in self.rows)
+        return (row.render(column_widths, default_columns_alignment) for row in self.rows)
