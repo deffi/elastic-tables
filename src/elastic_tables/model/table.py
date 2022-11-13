@@ -1,8 +1,12 @@
 from dataclasses import dataclass
 from itertools import zip_longest
+import re
 from typing import Sequence, Iterator, Pattern
 
 from elastic_tables.model import Row, Cell
+
+
+numeric_pattern = re.compile(r'\s*[+-]?\d+\s*')
 
 
 @dataclass()
@@ -30,3 +34,14 @@ class Table:
     def columns_match(self, pattern: Pattern) -> Sequence[bool]:
         columns = self.columns()
         return [self.column_matches(column, pattern) for column in columns]
+
+    def render(self, align_numeric: bool=False) -> Iterator[str]:
+        columns_widths = self.column_widths()
+
+        if align_numeric:
+            column_is_numeric = self.columns_match(numeric_pattern)
+            default_columns_alignment = [str.rjust if numeric else str.ljust for numeric in column_is_numeric]
+        else:
+            default_columns_alignment = [str.ljust] * len(columns_widths)
+
+        return (row.render(columns_widths, default_columns_alignment) for row in self.rows)

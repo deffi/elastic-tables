@@ -35,6 +35,39 @@ class RenderTest(unittest.TestCase):
         numeric = re.compile(r'\d+')
         self.assertEqual([False, True, False], table.columns_match(numeric))
 
+    def test_render(self):
+        # Empty table
+        self.assertEqual([], list(Table([]).render()))
+
+        # Empty rows
+        self.assertEqual(["\n", "\n"], list(Table([Row([], "\n"), Row([], "\n")]).render()))
+
+        # Equal column lengths
+        self.assertEqual([
+            "foob  \n",  # TODO trailing tabs, yay or nay?
+            "b  bar\n"],
+            list(Table([
+                Row([Cell("foo"), Cell("b")], "\n"),
+                Row([Cell("b"), Cell("bar")], "\n")]).render()))
+
+        # Different column lengths
+        self.assertEqual([
+            "foob\n",
+            "f  \n"],  # TODO extra space for second column, yay or nay?
+            list(Table([
+                Row([Cell("foo"), Cell("b")], "\n"),
+                Row([Cell("f")], "\n")]).render()))
+
+    def test_align_numeric(self):
+        table = Table([
+            Row([Cell("a"  ), Cell("+1" ), Cell("222")], "\n"),
+            Row([Cell("bb" ), Cell("333"), Cell("44" )], "\n"),
+            Row([Cell("ccc"), Cell("55" ), Cell("d"  )], "\n"),
+        ])
+
+        self.assertEqual(["a  +1 222\n", "bb 33344 \n", "ccc55 d  \n"], list(table.render(False)))
+        self.assertEqual(["a   +1222\n", "bb 33344 \n", "ccc 55d  \n"], list(table.render(True)))
+
 
 if __name__ == '__main__':
     unittest.main()
