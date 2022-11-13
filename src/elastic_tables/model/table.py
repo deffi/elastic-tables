@@ -35,7 +35,7 @@ class Table:
         columns = self.columns()
         return [self.column_matches(column, pattern) for column in columns]
 
-    def render(self, align_numeric: bool=False) -> Iterator[str]:
+    def render(self, align_numeric: bool = False) -> Iterator[str]:
         columns_widths = self.column_widths()
 
         if align_numeric:
