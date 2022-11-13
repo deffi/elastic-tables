@@ -1,3 +1,4 @@
+from dataclasses import replace
 import unittest
 
 from elastic_tables.model import Table, Row, Cell, Block, Line, Column
@@ -115,6 +116,20 @@ class RenderTest(unittest.TestCase):
 
         self.assertEqual(["a  +1 222\n", "bb 33344 \n", "ccc55 d  \n"], list(table.render()))
         self.assertEqual(["a   +1222\n", "bb 33344 \n", "ccc 55d  \n"], list(table.align_numeric().render()))
+
+    def test_map_cells(self):
+        def upper(cell: Cell) -> Cell:
+            return replace(cell, text=cell.text.upper())
+
+        table = Table([
+            Row([Cell("foo"), Cell("bar")], "\n"),
+            Row([Cell("baz")], "\n")])
+
+        table = table.map_cells(upper)
+
+        self.assertEqual(Table([
+            Row([Cell("FOO"), Cell("BAR")], "\n"),
+            Row([Cell("BAZ")], "\n")]), table)
 
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field, replace
 from itertools import zip_longest
 import re
-from typing import Sequence, Iterator
+from typing import Sequence, Iterator, Callable
 
 from elastic_tables.model import Row, Cell, Block, Column, AlignmentFunction
 from elastic_tables.util.alignment import left, right
@@ -49,3 +49,7 @@ class Table:
     def align_numeric(self) -> "Table":
         column_alignment = self.numeric_alignment()
         return replace(self, column_alignment=column_alignment)
+
+    def map_cells(self, function: Callable[[Cell], Cell]) -> "Table":
+        rows = [row.map_cells(function) for row in self.rows]
+        return replace(self, rows=rows)
