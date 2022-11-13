@@ -19,6 +19,12 @@ class Table:
         rows = [Row.from_line(line, separator) for line in block.lines]
         return Table(rows)
 
+    def column_count(self) -> int:
+        if self.rows:
+            return max(len(row.cells) for row in self.rows)
+        else:
+            return 0
+
     def columns(self) -> Iterator[Column]:
         all_cells = zip_longest(*(row.cells for row in self.rows), fillvalue=Cell(""))
         return (Column(list(column_cells)) for column_cells in all_cells)

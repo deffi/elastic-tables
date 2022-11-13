@@ -27,6 +27,22 @@ class RenderTest(unittest.TestCase):
 
         self.assertEqual(expected, Table.from_block(block))
 
+    def test_column_count(self):
+        _ = Cell("")
+
+        # No rows
+        self.assertEqual(0, Table([]).column_count())
+
+        # Rows with no cells each
+        self.assertEqual(0, Table([Row([], "\n")]).column_count())
+        self.assertEqual(0, Table([Row([], "\n"), Row([], "\n")]).column_count())
+
+        # Single row
+        self.assertEqual(1, Table([Row([_], "\n")]).column_count())
+
+        # Multiple rows (different number of cells)
+        self.assertEqual(2, Table([Row([_, _], "\n"), Row([_], "\n")]).column_count())
+
     def test_columns(self):
         a = Cell("a")
         b = Cell("b")
