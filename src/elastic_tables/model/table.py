@@ -4,6 +4,7 @@ import re
 from typing import Sequence, Iterator, Pattern
 
 from elastic_tables.model import Row, Cell, Block
+from elastic_tables.util.alignment import left, right
 
 
 numeric_pattern = re.compile(r'\s*[+-]?\d+\s*')
@@ -45,8 +46,8 @@ class Table:
 
         if align_numeric:
             column_is_numeric = self.columns_match(numeric_pattern)
-            default_columns_alignment = [str.rjust if numeric else str.ljust for numeric in column_is_numeric]
+            default_columns_alignment = [right if numeric else left for numeric in column_is_numeric]
         else:
-            default_columns_alignment = [str.ljust] * len(columns_widths)
+            default_columns_alignment = [left] * len(columns_widths)
 
         return (row.render(columns_widths, default_columns_alignment) for row in self.rows)
