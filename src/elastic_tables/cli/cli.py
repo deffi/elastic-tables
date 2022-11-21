@@ -7,10 +7,11 @@ import typer
 from elastic_tables.filter import StreamFilter
 
 
-def do_filter(file: TextIO, align_numeric: bool, align_space: bool) -> None:
+def do_filter(file: TextIO, align_numeric: bool, align_space: bool, trim: bool) -> None:
     f = StreamFilter(sys.stdout)
     f.filter.align_numeric = align_numeric
     f.filter.align_space = align_space
+    f.filter.trim = trim
 
     # Read line by line so we can use it in a shell pipeline without blocking
     while (string := file.readline()) != "":
@@ -19,15 +20,18 @@ def do_filter(file: TextIO, align_numeric: bool, align_space: bool) -> None:
     f.flush()
 
 
-def cli(file_name: Optional[Path] = typer.Argument(None), align_numeric: bool = True, align_space: bool = True) -> None:
+def cli(file_name: Optional[Path] = typer.Argument(None),
+        align_numeric: bool = True,
+        align_space: bool = True,
+        trim: bool = False) -> None:
     sys.stdout.reconfigure(newline='')
 
     if file_name is None:
         sys.stdin.reconfigure(newline='')
-        do_filter(sys.stdin, align_numeric, align_space)
+        do_filter(sys.stdin, align_numeric, align_space, trim)
     else:
         with open(file_name, "r", newline='') as file:
-            do_filter(file, align_numeric, align_space)
+            do_filter(file, align_numeric, align_space, trim)
 
 
 def main():

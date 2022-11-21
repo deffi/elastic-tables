@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass, field, replace
 from itertools import zip_longest
 import re
@@ -20,7 +22,7 @@ class Table:
             object.__setattr__(self, "column_alignment", [None] * self.column_count())
 
     @classmethod
-    def from_block(cls, block: Block, separator: str = "\t"):
+    def from_block(cls, block: Block, separator: str = "\t") -> Table:
         rows = [Row.from_line(line, separator) for line in block.lines]
         return Table(rows)
 
@@ -34,9 +36,9 @@ class Table:
         all_cells = zip_longest(*(row.cells for row in self.rows), fillvalue=Cell(""))
         return (Column(list(column_cells)) for column_cells in all_cells)
 
-    def render(self) -> Iterator[str]:
+    def render(self, trim: bool) -> Iterator[str]:
         column_widths = [column.width() for column in self.columns()]
-        return (row.render(column_widths, self.column_alignment) for row in self.rows)
+        return (row.render(column_widths, self.column_alignment, trim) for row in self.rows)
 
     #############
     # Transform #

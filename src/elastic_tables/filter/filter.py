@@ -12,6 +12,7 @@ class Filter:
     def __init__(self, callback: Callback = None):
         self.align_numeric = False
         self.align_space = False
+        self.trim = False  # TODO unit tests
 
         self._block_splitter = BlockSplitter(self._input_block)
         self._line_splitter = LineSplitter(self._block_splitter.input)
@@ -58,7 +59,7 @@ class Filter:
             table = table.align_numeric()
         if self.align_space:
             table = table.map_cells(self.align_cell_space)
-        text = table.render()
+        text = table.render(self.trim)
         self._callback("".join(text))
 
     ####################

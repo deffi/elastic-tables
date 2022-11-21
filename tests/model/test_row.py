@@ -11,9 +11,16 @@ class RowTest(unittest.TestCase):
 
     def test_render(self):
         row = Row([Cell("a"), Cell("foo"), Cell("b"), Cell("c")], "\n")
-        self.assertEqual("a  foo  bc  \n", row.render([3, 5, 1, 3], [L, L, L, L]))
-        self.assertEqual("a    foobc  \n", row.render([3, 5, 1, 3], [L, R, L, L]))
-        self.assertEqual("  a  foob  c\n", row.render([3, 5, 1, 3], [R, R, R, R]))
+
+        # Without trim
+        self.assertEqual("a  foo  bc  \n", row.render([3, 5, 1, 3], [L, L, L, L], False))
+        self.assertEqual("a    foobc  \n", row.render([3, 5, 1, 3], [L, R, L, L], False))
+        self.assertEqual("  a  foob  c\n", row.render([3, 5, 1, 3], [R, R, R, R], False))
+
+        # With trim
+        self.assertEqual("a  foo  bc\n", row.render([3, 5, 1, 3], [L, L, L, L], True))
+        self.assertEqual("a    foobc\n", row.render([3, 5, 1, 3], [L, R, L, L], True))
+        self.assertEqual("  a  foob  c\n", row.render([3, 5, 1, 3], [R, R, R, R], True))
 
     def test_map_cells(self):
         def upper(cell: Cell) -> Cell:

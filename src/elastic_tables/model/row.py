@@ -19,10 +19,13 @@ class Row:
     def __len__(self):
         return len(self.cells)
 
-    def render(self, widths: Sequence[int], alignments: Sequence[AlignmentFunction]) -> str:
+    def render(self, widths: Sequence[int], alignments: Sequence[AlignmentFunction], trim: bool) -> str:
         cell_width_alignment = zip(self.cells, widths, alignments)
         rendered_cells = (cell.render(width, alignment) for cell, width, alignment in cell_width_alignment)
-        return "".join(rendered_cells) + self.line_terminator
+        rendered_line = "".join(rendered_cells)
+        if trim:
+            rendered_line = rendered_line.rstrip()
+        return rendered_line + self.line_terminator
 
     def map_cells(self, function: Callable[[Cell], Cell]) -> Row:
         cells = [function(cell) for cell in self.cells]

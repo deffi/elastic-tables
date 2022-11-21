@@ -77,10 +77,10 @@ class RenderTest(unittest.TestCase):
 
     def test_render(self):
         # Empty table
-        self.assertEqual([], list(Table([]).render()))
+        self.assertEqual([], list(Table([]).render(False)))
 
         # Empty rows
-        self.assertEqual(["\n", "\n"], list(Table([Row([], "\n"), Row([], "\n")]).render()))
+        self.assertEqual(["\n", "\n"], list(Table([Row([], "\n"), Row([], "\n")]).render(False)))
 
         # Equal column lengths
         self.assertEqual([
@@ -88,7 +88,7 @@ class RenderTest(unittest.TestCase):
             "b  bar\n"],
             list(Table([
                 Row([Cell("foo"), Cell("b")], "\n"),
-                Row([Cell("b"), Cell("bar")], "\n")]).render()))
+                Row([Cell("b"), Cell("bar")], "\n")]).render(False)))
 
         # Different column lengths
         self.assertEqual([
@@ -96,7 +96,7 @@ class RenderTest(unittest.TestCase):
             "f  \n"],  # TODO extra space for second column, yay or nay?
             list(Table([
                 Row([Cell("foo"), Cell("b")], "\n"),
-                Row([Cell("f")], "\n")]).render()))
+                Row([Cell("f")], "\n")]).render(False)))
 
     def test_numeric_alignment(self):
         table = Table([
@@ -114,8 +114,8 @@ class RenderTest(unittest.TestCase):
             Row([Cell("ccc"), Cell("55" ), Cell("d"  )], "\n"),
         ])
 
-        self.assertEqual(["a  +1 222\n", "bb 33344 \n", "ccc55 d  \n"], list(table.render()))
-        self.assertEqual(["a   +1222\n", "bb 33344 \n", "ccc 55d  \n"], list(table.align_numeric().render()))
+        self.assertEqual(["a  +1 222\n", "bb 33344 \n", "ccc55 d  \n"], list(table.render(False)))
+        self.assertEqual(["a   +1222\n", "bb 33344 \n", "ccc 55d  \n"], list(table.align_numeric().render(False)))
 
     def test_map_cells(self):
         def upper(cell: Cell) -> Cell:
