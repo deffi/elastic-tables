@@ -21,6 +21,27 @@ Trailing empty lines:
   * Maybe we could use StringIO.readline 
 
 
+Block splitting
+===============
+
+Questions:
+  * Lines without a separator - treat as single cell or pass through?
+    * Only relevant if there's trailing whitespace added, i. e. when we're
+      padding the last cell or the row and when we're not trimming output lines
+  * Consecutive non-table lines - collect or pass through individually?
+
+We may want to split on:
+  * Blank lines
+  * Vertical tabs
+    * First character in a line: split before that line
+    * Last character in a line: split after that line
+    * Single character in a line:
+      * Split before/after the line?
+      * Keep the empty line? Continuity!
+    * Somewhere in a line: ???
+  * Lines without a separator (including blank lines)
+
+
 Space alignment
 ===============
 
