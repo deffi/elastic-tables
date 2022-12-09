@@ -1,53 +1,50 @@
 import unittest
 
+from typing import Iterable, Sequence
+
 from elastic_tables.model import Line, Block
 from elastic_tables.parsing import BlockSplitter
 
-blank = Line("", "\n")
-foo = Line("foo", "\n")
-bar = Line("bar", "\n")
-v_bar = Line("\vbar", "\n")
-bar_v = Line("bar\v", "\n")
-baz = Line("bar", "\n")
+
+def lines(*strings: str) -> Sequence[Line]:
+    return [Line(string, "\n") for string in strings]
+
+
+def blocks(*groups: Iterable[str]) -> Sequence[Block]:
+    return [Block(lines(*group)) for group in groups]
 
 
 class BlockSplitterTest(unittest.TestCase):
+    def setUp(self) -> None:
+        self.splitter = BlockSplitter()
+
+    def assertSplitBlock(self, line_contents: Iterable[str], expected: Iterable[Iterable[str]], iterations: int = 3):
+        for i in range(iterations):
+            self.splitter.input(lines(*line_contents))
+            self.splitter.flush()
+            self.assertEqual(blocks(*expected), self.splitter.blocks(clear=False))
+            self.assertEqual(blocks(*expected), self.splitter.blocks())
+            self.assertEqual([], self.splitter.blocks())
+
     def test_vertical_tab_beginning(self):
-        splitter = BlockSplitter()
-
-        splitter.input([foo, v_bar, baz])
-        splitter.flush()
-        self.assertEqual([Block([foo]), Block([bar, baz])], splitter.blocks())
-
-        splitter.input([foo, v_bar, baz])
-        splitter.flush()
-        self.assertEqual([Block([foo]), Block([bar, baz])], splitter.blocks())
+        self.assertSplitBlock(["foo", "\vbar", "baz"], [["foo"], ["bar", "baz"]])
 
     def test_vertical_tab_end(self):
-        splitter = BlockSplitter()
-        splitter.input([foo, bar_v, baz])
-        splitter.flush()
-        self.assertEqual([Block([foo, bar]), Block([baz])], splitter.blocks())
+        self.assertSplitBlock(["foo", "bar\b", "baz"], [["foo", "bar"], ["baz"]])
 
     def test_blank_line(self):
-        splitter = BlockSplitter()
-        splitter.input([foo, blank, baz])
-        splitter.flush()
         # TODO should the blank line be in a separate block?
-        self.assertEqual([Block([foo, blank]), Block([baz])], splitter.blocks(clear=False))
-        self.assertEqual([Block([foo, blank]), Block([baz])], splitter.blocks())
-        self.assertEqual([], splitter.blocks())
+        self.assertSplitBlock(["foo", "", "baz"], [["foo", ""], ["baz"]])
 
     def test_flush(self):
-        splitter = BlockSplitter()
-        self.assertEqual([], splitter.blocks())
+        self.assertEqual([], self.splitter.blocks())
 
-        splitter.flush()
-        self.assertEqual([], splitter.blocks())
+        self.splitter.flush()
+        self.assertEqual([], self.splitter.blocks())
 
-        splitter.flush()
-        splitter.flush()
-        self.assertEqual([], splitter.blocks())
+        self.splitter.flush()
+        self.splitter.flush()
+        self.assertEqual([], self.splitter.blocks())
 
 
 if __name__ == '__main__':
