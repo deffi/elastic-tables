@@ -18,7 +18,7 @@ class BlockSplitterTest(unittest.TestCase):
     def setUp(self) -> None:
         self.splitter = BlockSplitter()
 
-    def assertSplitBlock(self, line_contents: Iterable[str], expected: Iterable[Iterable[str]], iterations: int = 3):
+    def assertSplitBlock(self, expected: Iterable[Iterable[str]], line_contents: Iterable[str], iterations: int = 3):
         for i in range(iterations):
             self.splitter.input(lines(*line_contents))
             self.splitter.flush()
@@ -27,14 +27,14 @@ class BlockSplitterTest(unittest.TestCase):
             self.assertEqual([], self.splitter.blocks())
 
     def test_vertical_tab_beginning(self):
-        self.assertSplitBlock(["foo", "\vbar", "baz"], [["foo"], ["bar", "baz"]])
+        self.assertSplitBlock([["foo"], ["bar", "baz"]], ["foo", "\vbar", "baz"])
 
     def test_vertical_tab_end(self):
-        self.assertSplitBlock(["foo", "bar\b", "baz"], [["foo", "bar"], ["baz"]])
+        self.assertSplitBlock([["foo", "bar"], ["baz"]], ["foo", "bar\b", "baz"])
 
     def test_blank_line(self):
         # TODO should the blank line be in a separate block?
-        self.assertSplitBlock(["foo", "", "baz"], [["foo", ""], ["baz"]])
+        self.assertSplitBlock([["foo", ""], ["baz"]], ["foo", "", "baz"])
 
     def test_flush(self):
         self.assertEqual([], self.splitter.blocks())
