@@ -7,8 +7,9 @@ import typer
 from elastic_tables.filter import StreamFilter
 
 
-def do_filter(file: TextIO, align_numeric: bool, align_space: bool, trim: bool) -> None:
+def do_filter(file: TextIO, column_separator: str, align_numeric: bool, align_space: bool, trim: bool) -> None:
     f = StreamFilter(sys.stdout)
+    f.filter.column_separator = column_separator
     f.filter.align_numeric = align_numeric
     f.filter.align_space = align_space
     f.filter.trim = trim
@@ -21,6 +22,7 @@ def do_filter(file: TextIO, align_numeric: bool, align_space: bool, trim: bool) 
 
 
 def cli(file_name: Optional[Path] = typer.Argument(None),
+        column_separator: str = "\t",
         align_numeric: bool = True,
         align_space: bool = True,
         trim: bool = False) -> None:
@@ -28,10 +30,10 @@ def cli(file_name: Optional[Path] = typer.Argument(None),
 
     if file_name is None:
         sys.stdin.reconfigure(newline='')
-        do_filter(sys.stdin, align_numeric, align_space, trim)
+        do_filter(sys.stdin, column_separator, align_numeric, align_space, trim)
     else:
         with open(file_name, "r", newline='') as file:
-            do_filter(file, align_numeric, align_space, trim)
+            do_filter(file, column_separator, align_numeric, align_space, trim)
 
 
 def main():

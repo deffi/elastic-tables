@@ -6,8 +6,6 @@ Almost-MVP:
 
 use fileinput
 
-Allow other separators for easier testing
-
 Default trim=true for CLI and Filter (update unit tests)
 Default align-numeric=false
 

@@ -30,6 +30,10 @@ class CliTest(unittest.TestCase):
             with self.subTest(method="stdin"):
                 self._test_stdin(input_path, expected_path, args or [])
 
+    def test_column_separator(self):
+        self._test("column-separator_tab")
+        self._test("column-separator_pipe", ["--column-separator", "|"])
+
     def test_line_break(self):
         self._test("line-break_lf")
         self._test("line-break_crlf")
