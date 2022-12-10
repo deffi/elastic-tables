@@ -15,6 +15,10 @@ def blocks(*groups: Iterable[str]) -> Sequence[Block]:
 
 
 class BlockSplitterTest(unittest.TestCase):
+    ###########
+    # General #
+    ###########
+
     def setUp(self) -> None:
         self.splitter = BlockSplitter()
 
@@ -26,27 +30,29 @@ class BlockSplitterTest(unittest.TestCase):
             self.assertEqual(blocks(*expected), self.splitter.blocks())
             self.assertEqual([], self.splitter.blocks())
 
-    def test_vertical_tab_beginning(self):
+    ################
+    # Single block #
+    ################
+
+    def test_empty_block(self):
         self.assertSplitBlock([
-            ["foo"],
-            ["bar", "baz"]
+        ], [
+        ])
+
+    def test_single_block(self):
+        self.assertSplitBlock([
+            ["foo", "bar", "baz"],
         ], [
             "foo",
-            "\vbar",
+            "bar",
             "baz",
         ])
 
-    def test_vertical_tab_end(self):
-        self.assertSplitBlock([
-            ["foo", "bar"],
-            ["baz"]
-        ], [
-            "foo",
-            "bar\b",
-            "baz",
-        ])
+    ##############
+    # Blank line #
+    ##############
 
-    def test_blank_line(self):
+    def test_split_on_blank_line(self):
         # TODO should the blank line be in a separate block?
         self.assertSplitBlock([
             ["foo", ""],
@@ -56,6 +62,34 @@ class BlockSplitterTest(unittest.TestCase):
             "",
             "baz",
         ])
+
+    ################
+    # Vertical tab #
+    ################
+
+    def test_split_on_vertical_tab_beginning(self):
+        self.assertSplitBlock([
+            ["foo"],
+            ["bar", "baz"]
+        ], [
+            "foo",
+            "\vbar",
+            "baz",
+        ])
+
+    def test_split_on_vertical_tab_end(self):
+        self.assertSplitBlock([
+            ["foo", "bar"],
+            ["baz"]
+        ], [
+            "foo",
+            "bar\v",
+            "baz",
+        ])
+
+    ##################
+    # Extra flushing #
+    ##################
 
     def test_flush(self):
         self.assertEqual([], self.splitter.blocks())
