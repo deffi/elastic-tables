@@ -21,6 +21,7 @@ class BlockSplitterTest(unittest.TestCase):
 
     def setUp(self) -> None:
         self.splitter = BlockSplitter()
+        self.splitter.column_separator = "|"
 
     def assertSplitBlock(self, expected: Iterable[Iterable[str]], line_contents: Iterable[str], iterations: int = 3):
         for i in range(iterations):
@@ -41,11 +42,11 @@ class BlockSplitterTest(unittest.TestCase):
 
     def test_single_block(self):
         self.assertSplitBlock([
-            ["foo\t1", "bar\t2", "baz\t3"],
+            ["foo|1", "bar|2", "baz|3"],
         ], [
-            "foo\t1",
-            "bar\t2",
-            "baz\t3",
+            "foo|1",
+            "bar|2",
+            "baz|3",
         ])
 
     #####################################
@@ -70,22 +71,22 @@ class BlockSplitterTest(unittest.TestCase):
         # accumulate them
         self.assertSplitBlock([
             ["foo"],
-            ["bar\t1", "baz\t2"],
+            ["bar|1", "baz|2"],
         ], [
             "foo",
-            "bar\t1",
-            "baz\t2",
+            "bar|1",
+            "baz|2",
         ])
 
     def test_split_after_multi_column_block(self):
         # Single-column lines are simply passed through (there is no need to
         # accumulate them
         self.assertSplitBlock([
-            ["foo\t1", "bar\t2"],
+            ["foo|1", "bar|2"],
             ["baz"],
         ], [
-            "foo\t1",
-            "bar\t2",
+            "foo|1",
+            "bar|2",
             "baz",
         ])
 
@@ -96,13 +97,13 @@ class BlockSplitterTest(unittest.TestCase):
 
     def test_split_on_blank_line(self):
         self.assertSplitBlock([
-            ["foo\t1"],
+            ["foo|1"],
             [""],
-            ["baz\t2"],
+            ["baz|2"],
         ], [
-            "foo\t1",
+            "foo|1",
             "",
-            "baz\t2",
+            "baz|2",
         ])
 
     ################
@@ -111,22 +112,22 @@ class BlockSplitterTest(unittest.TestCase):
 
     def test_split_on_vertical_tab_beginning(self):
         self.assertSplitBlock([
-            ["foo\t1"],
-            ["bar\t2", "baz\t3"]
+            ["foo|1"],
+            ["bar|2", "baz|3"]
         ], [
-            "foo\t1",
-            "\vbar\t2",
-            "baz\t3",
+            "foo|1",
+            "\vbar|2",
+            "baz|3",
         ])
 
     def test_split_on_vertical_tab_end(self):
         self.assertSplitBlock([
-            ["foo\t1", "bar\t2"],
-            ["baz\t3"]
+            ["foo|1", "bar|2"],
+            ["baz|3"]
         ], [
-            "foo\t1",
-            "bar\t2\v",
-            "baz\t3",
+            "foo|1",
+            "bar|2\v",
+            "baz|3",
         ])
 
     ##################

@@ -8,6 +8,8 @@ Callback = Callable[[Block], None]
 
 
 class BlockSplitter:
+    column_separator = "\t"
+
     split_on_blank_line = True
     split_on_vertical_tab = True
 
@@ -27,7 +29,7 @@ class BlockSplitter:
         split_before = False
         split_after = False
 
-        multi_column_line = ("\t" in line.content)
+        multi_column_line = (self.column_separator in line.content)
 
         # Single-column lines:
         #
