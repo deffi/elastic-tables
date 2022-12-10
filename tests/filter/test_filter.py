@@ -4,8 +4,6 @@ from elastic_tables.model import Cell
 from elastic_tables.filter import Filter
 from elastic_tables.util.alignment import left, right, center
 
-import data as test_data
-
 
 class FilterTest(unittest.TestCase):
     def test_splitting(self):
@@ -40,23 +38,6 @@ class FilterTest(unittest.TestCase):
 
     def test_filter(self):
         self.assertEqual("foob  \nb  bar", Filter.filter("foo\tb\nb\tbar"))
-
-    def _test_filter_file(self, prefix: str, filter_args: dict = None):
-        input_path, expected_path = test_data.test_case(prefix)
-
-        input_ = input_path.read_text()
-        expected = expected_path.read_text()
-
-        self.assertEqual(expected, "".join(Filter.filter(input_, **(filter_args or {}))))
-
-    def test_filter_file(self):
-        # TODO test all - need filter configuration
-        # TODO clean up, see test_cli
-        self._test_filter_file("line-break_lf", {"column_separator": "|"})
-        self._test_filter_file("line-break_crlf", {"column_separator": "|"})
-
-        self._test_filter_file("column-separator_tab")
-        self._test_filter_file("column-separator_pipe", {"column_separator": "|"})
 
 
 if __name__ == '__main__':
