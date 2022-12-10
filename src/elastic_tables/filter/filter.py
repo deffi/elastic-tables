@@ -10,6 +10,7 @@ Callback = Callable[[str], None]
 
 class Filter:
     def __init__(self, callback: Callback = None):
+        self._column_separator = "\t"
         self.align_numeric = False
         self.align_space = False
         self.trim = False  # TODO unit tests
@@ -20,10 +21,21 @@ class Filter:
         self._callback = callback or self._buffer_result
         self._result_buffer = ""
 
+    @property
+    def column_separator(self) -> str:
+        return self._column_separator
+
+    @column_separator.setter
+    def column_separator(self, value: str):
+        self._column_separator = value
+        self._block_splitter.column_separator = value
+
     @classmethod
-    def filter(cls, text: str, align_numeric: bool = None, align_space: bool = None) -> str:
+    def filter(cls, text: str, column_separator: str = None, align_numeric: bool = None, align_space: bool = None) -> str:
         filter_ = cls()
 
+        if column_separator is not None:
+            filter_.column_separator = column_separator
         if align_numeric is not None:
             filter_.align_numeric = align_numeric
         if align_space is not None:
@@ -54,7 +66,7 @@ class Filter:
             return cell
 
     def _input_block(self, block: Block) -> None:
-        table = Table.from_block(block)
+        table = Table.from_block(block, self.column_separator)
         if self.align_numeric:
             table = table.align_numeric()
         if self.align_space:
