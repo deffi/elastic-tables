@@ -17,6 +17,8 @@ class BlockSplitter:
 
         self._callback: Callback = callback or self._buffer_block
 
+        self._multi_column_line = False
+
     ##############
     # Processing #
     ##############
@@ -24,6 +26,26 @@ class BlockSplitter:
     def _add_line(self, line: Line) -> None:
         split_before = False
         split_after = False
+
+        multi_column_line = ("\t" in line.content)
+
+        # Single-column lines:
+        #
+        #     previous this   | split (1) | split (2)
+        #     ----------------|-----------+----------
+        #     single   single | no        | after
+        #     single   multi  | before    | (before, but already split after previous)
+        #     multi    single | before    | before+after
+        #     multi    multi  | no        | no
+        #
+        # (1): consecutive single-column lines are one block
+        # (2): consecutive single-column lines are individual blocks
+        if True:
+            if multi_column_line != self._multi_column_line:
+                split_before = True
+
+            if not multi_column_line:
+                split_after = True
 
         if self.split_on_blank_line:
             if len(line.content.strip()) == 0:
@@ -45,6 +67,8 @@ class BlockSplitter:
 
         if split_after:
             self.flush()
+
+        self._multi_column_line = multi_column_line
 
     ####################
     # Public interface #

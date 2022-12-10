@@ -34,14 +34,31 @@ class BlockSplitterTest(unittest.TestCase):
     # Single block #
     ################
 
-    def test_empty_block(self):
+    def test_no_lines(self):
         self.assertSplitBlock([
         ], [
         ])
 
     def test_single_block(self):
         self.assertSplitBlock([
-            ["foo", "bar", "baz"],
+            ["foo\t1", "bar\t2", "baz\t3"],
+        ], [
+            "foo\t1",
+            "bar\t2",
+            "baz\t3",
+        ])
+
+    #####################################
+    # Splitting on single-column blocks #
+    #####################################
+
+    def test_single_column_lines(self):
+        # Single-column lines are simply passed through (there is no need to
+        # accumulate them
+        self.assertSplitBlock([
+            ["foo"],
+            ["bar"],
+            ["baz"],
         ], [
             "foo",
             "bar",
@@ -53,14 +70,14 @@ class BlockSplitterTest(unittest.TestCase):
     ##############
 
     def test_split_on_blank_line(self):
-        # TODO should the blank line be in a separate block?
         self.assertSplitBlock([
-            ["foo", ""],
-            ["baz"],
+            ["foo\t1"],
+            [""],
+            ["baz\t2"],
         ], [
-            "foo",
+            "foo\t1",
             "",
-            "baz",
+            "baz\t2",
         ])
 
     ################
@@ -69,22 +86,22 @@ class BlockSplitterTest(unittest.TestCase):
 
     def test_split_on_vertical_tab_beginning(self):
         self.assertSplitBlock([
-            ["foo"],
-            ["bar", "baz"]
+            ["foo\t1"],
+            ["bar\t2", "baz\t3"]
         ], [
-            "foo",
-            "\vbar",
-            "baz",
+            "foo\t1",
+            "\vbar\t2",
+            "baz\t3",
         ])
 
     def test_split_on_vertical_tab_end(self):
         self.assertSplitBlock([
-            ["foo", "bar"],
-            ["baz"]
+            ["foo\t1", "bar\t2"],
+            ["baz\t3"]
         ], [
-            "foo",
-            "bar\v",
-            "baz",
+            "foo\t1",
+            "bar\t2\v",
+            "baz\t3",
         ])
 
     ##################
