@@ -38,9 +38,10 @@ class CliTest(unittest.TestCase):
                 self._test_stdin(input_path, expected_path, args)
 
     def test_column_separator(self):
-        self._test("column-separator_tab", column_separator="\t")
-        self._test("column-separator_tab", column_separator=None)
-        self._test("column-separator_pipe", column_separator="|")
+        self._test("column-separator_tab", column_separator=None)  # The CLI defaults to tab
+        self._test("column-separator_tab", column_separator="\t")  # Explicit tab
+        self._test("column-separator_pipe", column_separator="|")  # Explicit pipe
+        self._test("column-separator_pipe")  # This test defaults to pipe
 
     def test_line_break(self):
         self._test("line-break_lf")
