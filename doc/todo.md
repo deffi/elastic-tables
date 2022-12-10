@@ -1,3 +1,11 @@
+MVP:
+ * Always trim
+
+Almost-MVP:
+  * Add output column separator
+
+use fileinput
+
 Allow other separators for easier testing
 
 Default trim=true for CLI and Filter (update unit tests)
@@ -5,6 +13,14 @@ Default align-numeric=false
 
 Remove align-whitespace? It's probably poorly defined in case of space-only
 cells
+
+Implement StreamFilter as Filter subclass?
+
+Split lines into rows before splitting groups of lines into blocks?
+  * Pro: configurable column separator doesn't have to be duplicated; also, we
+    may want to escape the column separator 
+  * We may want to provide an interface where the user provides pre-split rows
+  * Con: handling of vertical tab must modify rows 
 
 We have two places where the default options are defined for filter options:
   * Filter class and cli functions
