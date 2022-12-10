@@ -20,19 +20,27 @@ class CliTest(unittest.TestCase):
         expected = expected_path.read_bytes()
         self.assertEqual(expected, output)
 
-    def _test(self, prefix: str, args: Optional[List[str]] = None, suffix: Optional[str] = ""):
+    def _test(self, prefix: str, args: Optional[List[str]] = None, suffix: Optional[str] = "",
+              column_separator: Optional[str] = "|"):
+        if args is None:
+            args = []
+
+        if column_separator is not None:
+            args = ["--column-separator", column_separator] + args
+
         with self.subTest(prefix=prefix, suffix=suffix, args=args):
             input_path, expected_path = test_data.test_case(prefix, suffix)
 
             with self.subTest(method="file"):
-                self._test_file(input_path, expected_path, args or [])
+                self._test_file(input_path, expected_path, args)
 
             with self.subTest(method="stdin"):
-                self._test_stdin(input_path, expected_path, args or [])
+                self._test_stdin(input_path, expected_path, args)
 
     def test_column_separator(self):
-        self._test("column-separator_tab")
-        self._test("column-separator_pipe", ["--column-separator", "|"])
+        self._test("column-separator_tab", column_separator="\t")
+        self._test("column-separator_tab", column_separator=None)
+        self._test("column-separator_pipe", column_separator="|")
 
     def test_line_break(self):
         self._test("line-break_lf")

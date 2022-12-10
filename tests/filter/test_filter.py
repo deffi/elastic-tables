@@ -51,8 +51,9 @@ class FilterTest(unittest.TestCase):
 
     def test_filter_file(self):
         # TODO test all - need filter configuration
-        self._test_filter_file("line-break_lf")
-        self._test_filter_file("line-break_crlf")
+        # TODO clean up, see test_cli
+        self._test_filter_file("line-break_lf", {"column_separator": "|"})
+        self._test_filter_file("line-break_crlf", {"column_separator": "|"})
 
         self._test_filter_file("column-separator_tab")
         self._test_filter_file("column-separator_pipe", {"column_separator": "|"})
