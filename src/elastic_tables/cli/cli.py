@@ -23,8 +23,8 @@ def do_filter(file: TextIO, column_separator: str, align_numeric: bool, align_sp
 
 def cli(file_name: Optional[Path] = typer.Argument(None),
         column_separator: str = "\t",
-        align_numeric: bool = True,
-        align_space: bool = True,
+        align_numeric: bool = False,
+        align_space: bool = False,
         trim: bool = False) -> None:
     sys.stdout.reconfigure(newline='')
 
