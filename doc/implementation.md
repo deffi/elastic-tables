@@ -59,6 +59,9 @@ Continuity:
     " a "  -> "a", length 1
     "  "   -> "", length 0
 
+Note that space alignment interfers with indentation. May need an extra tab
+at the beginning or the line or after the indent.
+
 
 Trailing whitespace
 ===================
