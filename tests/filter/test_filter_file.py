@@ -15,10 +15,7 @@ class FilterTest(unittest.TestCase):
         if column_separator is not None:
             filter_args["column_separator"] = column_separator
 
-        input_path, expected_path = test_data.test_case(prefix, suffix)
-
-        input_ = input_path.read_text()
-        expected = expected_path.read_text()
+        input_, expected = test_data.test_case_data(prefix, suffix)
 
         with self.subTest(prefix=prefix, suffix=suffix, filter_args=filter_args):
             self.assertEqual(expected, "".join(Filter.filter(input_, **filter_args)))
