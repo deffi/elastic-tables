@@ -1,13 +1,6 @@
-MVP:
- * Always trim
-
-Almost-MVP:
-  * Add output column separator
+Add output column separator
 
 use fileinput
-
-Default trim=true for CLI and Filter (update unit tests)
-Default align-numeric=false
 
 Remove align-whitespace? It's probably poorly defined in case of space-only
 cells

@@ -13,7 +13,7 @@ class StreamFilterTest(unittest.TestCase):
         stream_filter.write("b\tbar\n")
         stream_filter.flush()
 
-        self.assertEqual("foof  \nb  bar\n", stream.getvalue())
+        self.assertEqual("foof\nb  bar\n", stream.getvalue())
 
     def test_print(self):
         stream = StringIO()
@@ -23,7 +23,7 @@ class StreamFilterTest(unittest.TestCase):
         print("b\tbar", file=stream_filter)
         stream_filter.flush()
 
-        self.assertEqual("foof  \nb  bar\n", stream.getvalue())
+        self.assertEqual("foof\nb  bar\n", stream.getvalue())
 
 
 if __name__ == '__main__':

@@ -12,7 +12,7 @@ class FilterTest(unittest.TestCase):
         f.input("foo\tb\n")
         self.assertEqual("", f.text(clear=False))
         f.input("b\tbar\v\n")
-        self.assertEqual("foob  \nb  bar\n", f.text())
+        self.assertEqual("foob\nb  bar\n", f.text())
 
     def test_flush(self):
         f = Filter()
@@ -37,7 +37,7 @@ class FilterTest(unittest.TestCase):
         self.assertEqual(Cell(" " * 2, None), Filter.align_cell_space(Cell(" " * 4, None)))
 
     def test_filter(self):
-        self.assertEqual("foob  \nb  bar", Filter.filter("foo\tb\nb\tbar"))
+        self.assertEqual("foob\nb  bar", Filter.filter("foo\tb\nb\tbar"))
 
 
 if __name__ == '__main__':

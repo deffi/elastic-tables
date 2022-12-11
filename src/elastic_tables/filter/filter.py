@@ -13,7 +13,7 @@ class Filter:
         self._column_separator = "\t"
         self.align_numeric = False
         self.align_space = False
-        self.trim = False  # TODO unit tests
+        self._trim = True  # Not exposed for now, it is poorly defined
 
         self._block_splitter = BlockSplitter(self._input_block)
         self._line_splitter = LineSplitter(self._block_splitter.input)
@@ -31,7 +31,8 @@ class Filter:
         self._block_splitter.column_separator = value
 
     @classmethod
-    def filter(cls, text: str, column_separator: str = None, align_numeric: bool = None, align_space: bool = None) -> str:
+    def filter(cls, text: str, column_separator: str = None, align_numeric: bool = None,
+               align_space: bool = None) -> str:
         filter_ = cls()
 
         if column_separator is not None:
@@ -71,7 +72,7 @@ class Filter:
             table = table.align_numeric()
         if self.align_space:
             table = table.map_cells(self.align_cell_space)
-        text = table.render(self.trim)
+        text = table.render(self._trim)
         self._callback("".join(text))
 
     ####################

@@ -1,2 +1,2 @@
-foob  
+foob
 b  bar

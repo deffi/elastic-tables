@@ -13,7 +13,7 @@ class IoTest(unittest.TestCase):
 
     def test_stdout_with_install(self):
         output = subprocess.check_output([sys.executable, __file__, "do_stdout_with_install"], text=True)
-        self.assertEqual("foob  \nf  bar\n", output)
+        self.assertEqual("foob\nf  bar\n", output)
 
 
 if __name__ == '__main__':
