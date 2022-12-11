@@ -20,7 +20,7 @@ class CliTest(unittest.TestCase):
         expected = expected_path.read_bytes()
         self.assertEqual(expected, output)
 
-    def _test(self, prefix: str, args: Optional[List[str]] = None, suffix: Optional[str] = "",
+    def _test(self, prefix: str, args: Optional[List[str]] = None, suffix: Optional[str] = "", *,
               column_separator: Optional[str] = "|"):
         if args is None:
             args = []
