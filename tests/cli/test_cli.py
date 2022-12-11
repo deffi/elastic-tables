@@ -1,5 +1,6 @@
 from pathlib import Path
 import subprocess
+import os
 import sys
 from typing import Optional, List
 import unittest
@@ -60,6 +61,10 @@ class CliTest(unittest.TestCase):
     # TODO test that after the first chunk, the first table is output before the
     # second chunk is complete
 
+
+if os.environ.get("SKIP_CLI_TEST") == "1":
+    print("Skipping CLI test")
+    CliTest = None
 
 if __name__ == '__main__':
     unittest.main()
