@@ -38,24 +38,24 @@ class CliTest(unittest.TestCase):
                 self._test_stdin(input_path, expected_path, args)
 
     def test_column_separator(self):
-        self._test("column-separator_tab", column_separator=None)  # The CLI defaults to tab
         self._test("column-separator_tab", column_separator="\t")  # Explicit tab
         self._test("column-separator_pipe", column_separator="|")  # Explicit pipe
+        self._test("column-separator_tab", column_separator=None)  # The CLI defaults to tab
         self._test("column-separator_pipe")  # This test defaults to pipe
 
     def test_line_break(self):
-        self._test("line-break_lf")
-        self._test("line-break_crlf")
+        self._test("line-break_lf")  # LF
+        self._test("line-break_crlf")  # CR/LF
 
     def test_align_numeric(self):
-        self._test("align-numeric", [], "yes")  # TODO don't use True as default
-        self._test("align-numeric", ["--align-numeric"], "yes")
-        self._test("align-numeric", ["--no-align-numeric"], "no")
+        self._test("align-numeric", ["--align-numeric"], "yes")  # Explicit true
+        self._test("align-numeric", ["--no-align-numeric"], "no")  # Explicit false
+        self._test("align-numeric", [], "yes")  # The CLI defaults to true TODO don't use True as default
 
     def test_align_space(self):
-        self._test("align-space", [], "yes")  # TODO don't use True as default
-        self._test("align-space", ["--align-space"], "yes")
-        self._test("align-space", ["--no-align-space"], "no")
+        self._test("align-space", ["--align-space"], "yes")  # Explicit true
+        self._test("align-space", ["--no-align-space"], "no")  # Explicit false
+        self._test("align-space", [], "yes")  # The CLI defaults to true TODO don't use True as default
 
     # TODO test that after the first chunk, the first table is output before the
     # second chunk is complete

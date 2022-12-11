@@ -24,24 +24,24 @@ class FilterTest(unittest.TestCase):
             self.assertEqual(expected, "".join(Filter.filter(input_, **filter_args)))
 
     def test_column_separator(self):
-        self._test("column-separator_tab", column_separator=None)  # The filter defaults to tab
         self._test("column-separator_tab", column_separator="\t")  # Explicit tab
         self._test("column-separator_pipe", column_separator="|")  # Explicit pipe
+        self._test("column-separator_tab", column_separator=None)  # The filter defaults to tab
         self._test("column-separator_pipe")  # This test defaults to pipe
 
     def test_line_break(self):
-        self._test("line-break_lf")
-        self._test("line-break_crlf")
+        self._test("line-break_lf")  # LF
+        self._test("line-break_crlf")  # CR/LF
 
     def test_align_numeric(self):
-        self._test("align-numeric", {}, "no")
-        self._test("align-numeric", {"align_numeric": True}, "yes")
-        self._test("align-numeric", {"align_numeric": False}, "no")
+        self._test("align-numeric", {"align_numeric": True}, "yes")  # Explicit true
+        self._test("align-numeric", {"align_numeric": False}, "no")  # Explicit false
+        self._test("align-numeric", {}, "no")  # The filter defaults to false
 
     def test_align_space(self):
-        self._test("align-space", {}, "no")
-        self._test("align-space", {"align_space": True}, "yes")
-        self._test("align-space", {"align_space": False}, "no")
+        self._test("align-space", {"align_space": True}, "yes")  # Explicit true
+        self._test("align-space", {"align_space": False}, "no")  # Explicit false
+        self._test("align-space", {}, "no")  # The filter defaults to false
 
 
 if __name__ == '__main__':
