@@ -1,9 +1,7 @@
 import unittest
 from typing import Optional
 
-from elastic_tables.model import Cell
 from elastic_tables.filter import Filter
-from elastic_tables.util.alignment import left, right, center
 
 import data as test_data
 
