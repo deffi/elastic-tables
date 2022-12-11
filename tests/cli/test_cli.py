@@ -48,12 +48,12 @@ class CliTest(unittest.TestCase):
         self._test("line-break_crlf")
 
     def test_align_numeric(self):
-        self._test("align-numeric", [], "yes")
+        self._test("align-numeric", [], "yes")  # TODO don't use True as default
         self._test("align-numeric", ["--align-numeric"], "yes")
         self._test("align-numeric", ["--no-align-numeric"], "no")
 
     def test_align_space(self):
-        self._test("align-space", [], "yes")
+        self._test("align-space", [], "yes")  # TODO don't use True as default
         self._test("align-space", ["--align-space"], "yes")
         self._test("align-space", ["--no-align-space"], "no")
 
