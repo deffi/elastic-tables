@@ -90,6 +90,26 @@ class BlockSplitterTest(unittest.TestCase):
             "baz",
         ])
 
+    def test_split_single_and_multi_column_blocks(self):
+        # Single-column lines are simply passed through (there is no need to
+        # accumulate them
+        self.assertSplitBlock([
+            ["a|1", "b|2"],
+            ["foo"],
+            ["bar"],
+            ["c|3", "d|4"],
+            ["baz"],
+            ["qux"],
+        ], [
+            "a|1",
+            "b|2",
+            "foo",
+            "bar",
+            "c|3",
+            "d|4",
+            "baz",
+            "qux",
+        ])
 
     ##############
     # Blank line #
