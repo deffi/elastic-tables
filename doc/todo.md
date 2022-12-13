@@ -13,6 +13,10 @@ File tests:
 
 Implement StreamFilter as Filter subclass?
 
+Test whether it is locale (encoding) aware
+
+Rename cell text to cell content
+
 Split lines into rows before splitting groups of lines into blocks?
   * Pro: configurable column separator doesn't have to be duplicated; also, we
     may want to escape the column separator 

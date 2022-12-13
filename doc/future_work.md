@@ -1,34 +1,4 @@
-Cell alignment:
-  * Default alignment:
-    * Text cells: left
-    * Numeric columns: right with --align-numeric, else left
-      Numeric columsn are columns that contain onyl numeric cells
-      Numeric cells are cells with contains only digits and an optional sign:
-      \s*[+-]?\d*\s*
-  * Leading/trailing whitespace: --whitespace
-    * keep: treated like other characters
-    * remove: not included in cell contents
-    * align:
-      * Regular whitespace: not included in cell contents and used to determine
-        alignment
-      * NBSP (\xa0): used for alignment and removed; regular
-        whitespace is kept
-  * --quote: only whitespace outside the quotes is used for alignment
-    and/or removed; one set of double-quotes are also removed (if present)
-  * --keep-blank: completely blank cells are kept (only makes sense with
-    --whitespace remove and --whitespace align)
-  * Limitations:
-    * With --whitespace align, we can't default-align a cell with
-      leading/trailing whitespace, not even using nbsp. 
-  * Defaults for CLI:
-    * elastic-tables:  --whitespace align --align-numeric --keep-blank
-    * elastic-tabstops: --whitespace keep
 
-Specify encoding?
-open without encoding uses locale.getpreferredencoding(False)
-https://docs.python.org/3/library/functions.html#open
-
-Support ANSI escape codes (currently, they probably mess up the formatting)
 
 Allow coloring columns or cells
 
@@ -72,6 +42,37 @@ Formatting by escape codes:
   * Probably best use backslash rather than ESC as escape character
   * Alignment: \< left, \> right, \| center?
 
+Text
+====
+
+Encoding
+--------
+
+Right now, we don't explicitly specify the encoding, so it's probably locale
+aware (locale.getpreferredencoding(False), see
+https://docs.python.org/3/library/functions.html#open)
+
+We may want to allow specifying the encoding explicitly. We might even want to
+allow specifying an input encoding and an output encoding, though we're not in
+the converting business.
+
+
+Escape codes
+------------
+
+Right now, ANSI escape codes (color codes) will probably mess up the formatting
+because the escape codes will contribute to the cell width. We should support
+them by (optionally) filtering them out before calculating the cell width.
+
+Open questions:
+  * When the cell content is padded and an escape code specifies a background
+    color, should that extend to the padding?
+  * We may be able to specify this per cell by only considering the first/last
+    color change in a cell: a switch to default followed by a switch to a
+    background color will not affect the left padding.
+
+
+
 Block splitting
 ===============
 
@@ -93,25 +94,6 @@ We may want to split on:
   * Lines without a separator (including blank lines)
 
 
-Space alignment
-===============
-
-Continuity:
-
-    "ab " -> "ab", length 2 (left-aligned)
-    "a "  -> "a", length 1
-    " "   -> "", length 0
-
-    " ab" -> "ab", length 2 (right-aligned)
-    " a"  -> "a", length 1
-    " "   -> "", length 0
-
-    " ab " -> "ab", length 2 (centered)
-    " a "  -> "a", length 1
-    "  "   -> "", length 0
-
-Note that space alignment interfers with indentation. May need an extra tab
-at the beginning or the line or after the indent.
 
 
 Trailing whitespace
@@ -152,3 +134,104 @@ Conclusion - algorithm:
 To test:
   * All relevant whitespace options
   * With alignment left/right/center
+
+Misc
+----
+
+Leading/trailing whitespace: --whitespace
+* keep: treated like other characters
+* remove: not included in cell contents
+* align:
+  * Regular whitespace: not included in cell contents and used to determine
+    alignment
+  * NBSP (\xa0): used for alignment and removed; regular
+    whitespace is kept
+--quote: only whitespace outside the quotes is used for alignment
+and/or removed; one set of double-quotes are also removed (if present)
+--keep-blank: completely blank cells are kept (only makes sense with
+--whitespace remove and --whitespace align)
+Limitations:
+* With --whitespace align, we can't default-align a cell with
+  leading/trailing whitespace, not even using nbsp. 
+Defaults for CLI:
+* elastic-tables:  --whitespace align --align-numeric --keep-blank
+* elastic-tabstops: --whitespace keep
+
+
+Cell alignment
+==============
+
+Cells alignment refers to how the text is placed in the cell if the cell is
+wider than the text. The following alignment options are valid:
+  * Left
+  * Right
+  * Centered-left (round to the left if the difference between cell width and
+    text width is not an even number)
+  * Centered-right (likewise, round to the right)
+
+The following alignment settings are available from most to least specific:
+  * For a cell
+  * For a column
+  * For a table
+  * Default
+
+When a cell is rendered, its content is padded on the left, on the right, or on
+both sides, depending on the alignment and the difference between cell width and
+content width (if the difference is 1, then even a centered cell will only be
+padded on one side).
+
+Open questions:
+  * How to handle whitespace near the alignment edge?
+
+
+Numeric alignment
+-----------------
+
+A numeric cell is a cell which contains only digits and an optional sign:
+    \s*[+-]?\d*\s*
+
+A numeric column is a column which contains only numeric cells.
+
+Optionally, numeric columns are right-aligned by default. This might still be
+overridden for the whole column or for individual cells.
+
+We may also want to handle hexadecimal numbers, potentially only with a 0x
+prefix. We may also want to handle 0o, 0b, and 0d.
+
+We may also want to handle fractional numbers, but then we'll have to align them
+on the decimal point. This goes beyond alignment because it affects the cell
+width.
+  * For now, the user must provide a column break before the decimal point, or
+    after the last digit if there is no decimal point
+  * The easiest way would probably be to determine which columns qualify and
+    then to split these columns before or after the decimal point
+
+Open questions:
+  * Does it matter whether we split before or after the decimal point?
+  * How do we handle leading whitespace?
+  * How do we handle trailing whitespace?
+
+
+Space alignment
+---------------
+
+Continuity:
+
+    "ab " -> "ab", length 2 (left-aligned)
+    "a "  -> "a", length 1
+    " "   -> "", length 0
+
+    " ab" -> "ab", length 2 (right-aligned)
+    " a"  -> "a", length 1
+    " "   -> "", length 0
+
+    " ab " -> "ab", length 2 (centered)
+    " a "  -> "a", length 1
+    "  "   -> "", length 0
+
+Note that space alignment interfers with indentation. May need an extra tab
+at the beginning or the line or after the indent.
+
+Special whitespace?
+  * NBSP
+  * C1 padding character
