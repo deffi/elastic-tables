@@ -31,5 +31,22 @@ Line splitting:
     still have to separate the line terminator for the line content, and that
     would be a risk of inconsistency
   * Therefore, we append incoming data to a buffer and split on regex \r?\n
-  * A line is complete (a) whne it is terminated, (b) when the input ends, or
+  * A line is complete (a) when it is terminated, (b) when the input ends, or
     (c) when the line splitter is flushed manually
+
+
+Model
+=====
+
+A Line consists of two strings: the content and the terminator.
+
+A Block contains a sequence of lines.
+
+A Cell contains a text and has an optional alignment.
+
+A Row stores a seuqence of cells and a line terminator.
+
+A Column stores a sequence of cells. 
+
+A Table stores a sequence of Rows and has optional column alignments. It can
+generate columns. 
