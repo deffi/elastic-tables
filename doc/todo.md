@@ -5,6 +5,12 @@ use fileinput
 Remove align-whitespace? It's probably poorly defined in case of space-only
 cells
 
+CLI: multiple files: flush between?
+
+File tests:
+  * Empty line (1 or more) in input
+  * Trailing unterminated line
+
 Implement StreamFilter as Filter subclass?
 
 Split lines into rows before splitting groups of lines into blocks?
