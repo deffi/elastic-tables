@@ -1,3 +1,6 @@
+Change all tests to pytest
+Can we get the coverage from the subproces runs?
+
 Add output column separator
 
 use fileinput
