@@ -1,4 +1,4 @@
-import unittest
+import pytest
 
 from typing import Iterable, Sequence
 
@@ -14,34 +14,36 @@ def blocks(*groups: Iterable[str]) -> Sequence[Block]:
     return [Block(lines(*group)) for group in groups]
 
 
-class BlockSplitterTest(unittest.TestCase):
+@pytest.fixture()
+def splitter():
+    splitter = BlockSplitter()
+    splitter.column_separator = "|"
+    return splitter
+
+class TestBlockSplitter:
     ###########
     # General #
     ###########
 
-    def setUp(self) -> None:
-        self.splitter = BlockSplitter()
-        self.splitter.column_separator = "|"
-
-    def assertSplitBlock(self, expected: Iterable[Iterable[str]], line_contents: Iterable[str], iterations: int = 3):
+    def assertSplitBlock(self, splitter, expected: Iterable[Iterable[str]], line_contents: Iterable[str], iterations: int = 3):
         for i in range(iterations):
-            self.splitter.input(lines(*line_contents))
-            self.splitter.flush()
-            assert self.splitter.blocks(clear=False) == blocks(*expected)
-            assert self.splitter.blocks() == blocks(*expected)
-            assert self.splitter.blocks() == []
+            splitter.input(lines(*line_contents))
+            splitter.flush()
+            assert splitter.blocks(clear=False) == blocks(*expected)
+            assert splitter.blocks() == blocks(*expected)
+            assert splitter.blocks() == []
 
     ################
     # Single block #
     ################
 
-    def test_no_lines(self):
-        self.assertSplitBlock([
+    def test_no_lines(self, splitter):
+        self.assertSplitBlock(splitter, [
         ], [
         ])
 
-    def test_single_block(self):
-        self.assertSplitBlock([
+    def test_single_block(self, splitter):
+        self.assertSplitBlock(splitter, [
             ["foo|1", "bar|2", "baz|3"],
         ], [
             "foo|1",
@@ -53,10 +55,10 @@ class BlockSplitterTest(unittest.TestCase):
     # Splitting on single-column blocks #
     #####################################
 
-    def test_single_column_lines(self):
+    def test_single_column_lines(self, splitter):
         # Single-column lines are simply passed through (there is no need to
         # accumulate them
-        self.assertSplitBlock([
+        self.assertSplitBlock(splitter, [
             ["foo"],
             ["bar"],
             ["baz"],
@@ -66,10 +68,10 @@ class BlockSplitterTest(unittest.TestCase):
             "baz",
         ])
 
-    def test_split_before_multi_column_block(self):
+    def test_split_before_multi_column_block(self, splitter):
         # Single-column lines are simply passed through (there is no need to
         # accumulate them
-        self.assertSplitBlock([
+        self.assertSplitBlock(splitter, [
             ["foo"],
             ["bar|1", "baz|2"],
         ], [
@@ -78,10 +80,10 @@ class BlockSplitterTest(unittest.TestCase):
             "baz|2",
         ])
 
-    def test_split_after_multi_column_block(self):
+    def test_split_after_multi_column_block(self, splitter):
         # Single-column lines are simply passed through (there is no need to
         # accumulate them
-        self.assertSplitBlock([
+        self.assertSplitBlock(splitter, [
             ["foo|1", "bar|2"],
             ["baz"],
         ], [
@@ -90,10 +92,10 @@ class BlockSplitterTest(unittest.TestCase):
             "baz",
         ])
 
-    def test_split_single_and_multi_column_blocks(self):
+    def test_split_single_and_multi_column_blocks(self, splitter):
         # Single-column lines are simply passed through (there is no need to
         # accumulate them
-        self.assertSplitBlock([
+        self.assertSplitBlock(splitter, [
             ["a|1", "b|2"],
             ["foo"],
             ["bar"],
@@ -115,8 +117,8 @@ class BlockSplitterTest(unittest.TestCase):
     # Blank line #
     ##############
 
-    def test_split_on_blank_line(self):
-        self.assertSplitBlock([
+    def test_split_on_blank_line(self, splitter):
+        self.assertSplitBlock(splitter, [
             ["foo|1"],
             [""],
             ["baz|2"],
@@ -130,8 +132,8 @@ class BlockSplitterTest(unittest.TestCase):
     # Vertical tab #
     ################
 
-    def test_split_on_vertical_tab_beginning(self):
-        self.assertSplitBlock([
+    def test_split_on_vertical_tab_beginning(self, splitter):
+        self.assertSplitBlock(splitter, [
             ["foo|1"],
             ["bar|2", "baz|3"]
         ], [
@@ -140,8 +142,8 @@ class BlockSplitterTest(unittest.TestCase):
             "baz|3",
         ])
 
-    def test_split_on_vertical_tab_end(self):
-        self.assertSplitBlock([
+    def test_split_on_vertical_tab_end(self, splitter):
+        self.assertSplitBlock(splitter, [
             ["foo|1", "bar|2"],
             ["baz|3"]
         ], [
@@ -154,16 +156,12 @@ class BlockSplitterTest(unittest.TestCase):
     # Extra flushing #
     ##################
 
-    def test_flush(self):
-        assert self.splitter.blocks() == []
+    def test_flush(self, splitter):
+        assert splitter.blocks() == []
 
-        self.splitter.flush()
-        assert self.splitter.blocks() == []
+        splitter.flush()
+        assert splitter.blocks() == []
 
-        self.splitter.flush()
-        self.splitter.flush()
-        assert self.splitter.blocks() == []
-
-
-if __name__ == '__main__':
-    unittest.main()
+        splitter.flush()
+        splitter.flush()
+        assert splitter.blocks() == []
