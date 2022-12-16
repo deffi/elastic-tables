@@ -1,4 +1,5 @@
-Change all tests to pytest
+In test_filter_file and test_cli, use parametrization
+
 Can we get the coverage from the subproces runs?
 
 Add output column separator
