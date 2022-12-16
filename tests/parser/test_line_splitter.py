@@ -1,5 +1,5 @@
 from elastic_tables.model import Line
-from elastic_tables.parsing import LineSplitter
+from elastic_tables.parser import LineSplitter
 
 
 foo = Line("foo", "\n")

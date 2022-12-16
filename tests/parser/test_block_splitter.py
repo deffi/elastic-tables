@@ -3,7 +3,7 @@ import pytest
 from typing import Iterable, Sequence
 
 from elastic_tables.model import Line, Block
-from elastic_tables.parsing import BlockSplitter
+from elastic_tables.parser import BlockSplitter
 
 
 def lines(*strings: str) -> Sequence[Line]:

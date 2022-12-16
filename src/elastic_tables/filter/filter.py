@@ -1,7 +1,7 @@
 from dataclasses import replace
 from typing import Callable
 
-from elastic_tables.parsing import BlockSplitter, LineSplitter
+from elastic_tables.parser import BlockSplitter, LineSplitter
 from elastic_tables.model import Block, Table, Cell
 from elastic_tables.util import alignment
 
