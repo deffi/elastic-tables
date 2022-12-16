@@ -1,10 +1,9 @@
-import unittest
 from io import StringIO
 
 from elastic_tables.filter import StreamFilter
 
 
-class StreamFilterTest(unittest.TestCase):
+class TestStreamFilter:
     def test_write(self):
         stream = StringIO()
         stream_filter = StreamFilter(stream)
@@ -13,7 +12,7 @@ class StreamFilterTest(unittest.TestCase):
         stream_filter.write("b\tbar\n")
         stream_filter.flush()
 
-        self.assertEqual("foof\nb  bar\n", stream.getvalue())
+        assert stream.getvalue() == "foof\nb  bar\n"
 
     def test_print(self):
         stream = StringIO()
@@ -23,8 +22,4 @@ class StreamFilterTest(unittest.TestCase):
         print("b\tbar", file=stream_filter)
         stream_filter.flush()
 
-        self.assertEqual("foof\nb  bar\n", stream.getvalue())
-
-
-if __name__ == '__main__':
-    unittest.main()
+        assert stream.getvalue() == "foof\nb  bar\n"

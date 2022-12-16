@@ -1,5 +1,3 @@
-import unittest
-
 from elastic_tables.model import Line
 from elastic_tables.parsing import LineSplitter
 
@@ -9,52 +7,48 @@ bar_baz = Line("barbaz", "\n")
 qux = Line("qux", "")
 
 
-class LineSplitterTest(unittest.TestCase):
+class TestLineSplitter:
     def test_simple(self):
         splitter = LineSplitter(None)
 
         splitter.input("foo\n")
-        self.assertEqual([foo], splitter.lines(clear=False))
-        self.assertEqual([foo], splitter.lines())
-        self.assertEqual([], splitter.lines())
+        assert splitter.lines(clear=False) == [foo]
+        assert splitter.lines() == [foo]
+        assert splitter.lines() == []
 
         splitter.input("foo\n")
-        self.assertEqual([foo], splitter.lines(clear=False))
-        self.assertEqual([foo], splitter.lines())
-        self.assertEqual([], splitter.lines())
+        assert splitter.lines(clear=False) == [foo]
+        assert splitter.lines() == [foo]
+        assert splitter.lines() == []
 
     def test_multiple(self):
         splitter = LineSplitter(None)
-        self.assertEqual([], splitter.lines(clear=False))
+        assert splitter.lines(clear=False) == []
 
         splitter.input("foo\n")
-        self.assertEqual([foo], splitter.lines(clear=False))
+        assert splitter.lines(clear=False) == [foo]
 
         splitter.input("bar")
-        self.assertEqual([foo], splitter.lines(clear=False))
+        assert splitter.lines(clear=False) == [foo]
 
         splitter.input("baz\n")
-        self.assertEqual([foo, bar_baz], splitter.lines(clear=False))
+        assert splitter.lines(clear=False) == [foo, bar_baz]
 
         splitter.input("qux")
-        self.assertEqual([foo, bar_baz], splitter.lines(clear=False))
+        assert splitter.lines(clear=False) == [foo, bar_baz]
 
         splitter.flush()
-        self.assertEqual([foo, bar_baz, qux], splitter.lines(clear=False))
-        self.assertEqual([foo, bar_baz, qux], splitter.lines())
-        self.assertEqual([], splitter.lines())
+        assert splitter.lines(clear=False) == [foo, bar_baz, qux]
+        assert splitter.lines() == [foo, bar_baz, qux]
+        assert splitter.lines() == []
 
     def test_flush(self):
         splitter = LineSplitter()
-        self.assertEqual([], splitter.lines())
+        assert splitter.lines() == []
 
         splitter.flush()
-        self.assertEqual([], splitter.lines())
+        assert splitter.lines() == []
 
         splitter.flush()
         splitter.flush()
-        self.assertEqual([], splitter.lines())
-
-
-if __name__ == '__main__':
-    unittest.main()
+        assert splitter.lines() == []

@@ -27,9 +27,9 @@ class BlockSplitterTest(unittest.TestCase):
         for i in range(iterations):
             self.splitter.input(lines(*line_contents))
             self.splitter.flush()
-            self.assertEqual(blocks(*expected), self.splitter.blocks(clear=False))
-            self.assertEqual(blocks(*expected), self.splitter.blocks())
-            self.assertEqual([], self.splitter.blocks())
+            assert self.splitter.blocks(clear=False) == blocks(*expected)
+            assert self.splitter.blocks() == blocks(*expected)
+            assert self.splitter.blocks() == []
 
     ################
     # Single block #
@@ -155,14 +155,14 @@ class BlockSplitterTest(unittest.TestCase):
     ##################
 
     def test_flush(self):
-        self.assertEqual([], self.splitter.blocks())
+        assert self.splitter.blocks() == []
 
         self.splitter.flush()
-        self.assertEqual([], self.splitter.blocks())
+        assert self.splitter.blocks() == []
 
         self.splitter.flush()
         self.splitter.flush()
-        self.assertEqual([], self.splitter.blocks())
+        assert self.splitter.blocks() == []
 
 
 if __name__ == '__main__':

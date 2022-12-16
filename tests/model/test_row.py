@@ -1,26 +1,25 @@
 from dataclasses import replace
-import unittest
 
 from elastic_tables.model import Row, Line, Cell
 from elastic_tables.util.alignment import left as L, right as R
 
 
-class RowTest(unittest.TestCase):
+class TestRow:
     def test_from_line(self):
-        self.assertEqual(Row([Cell("foo"), Cell("bar")], "\n"), Row.from_line(Line("foo\tbar", "\n")))
+        assert Row.from_line(Line("foo\tbar", "\n")) == Row([Cell("foo"), Cell("bar")], "\n")
 
     def test_render(self):
         row = Row([Cell("a"), Cell("foo"), Cell("b"), Cell("c")], "\n")
 
         # Without trim
-        self.assertEqual("a  foo  bc  \n", row.render([3, 5, 1, 3], [L, L, L, L], False))
-        self.assertEqual("a    foobc  \n", row.render([3, 5, 1, 3], [L, R, L, L], False))
-        self.assertEqual("  a  foob  c\n", row.render([3, 5, 1, 3], [R, R, R, R], False))
+        assert row.render([3, 5, 1, 3], [L, L, L, L], False) == "a  foo  bc  \n"
+        assert row.render([3, 5, 1, 3], [L, R, L, L], False) == "a    foobc  \n"
+        assert row.render([3, 5, 1, 3], [R, R, R, R], False) == "  a  foob  c\n"
 
         # With trim
-        self.assertEqual("a  foo  bc\n", row.render([3, 5, 1, 3], [L, L, L, L], True))
-        self.assertEqual("a    foobc\n", row.render([3, 5, 1, 3], [L, R, L, L], True))
-        self.assertEqual("  a  foob  c\n", row.render([3, 5, 1, 3], [R, R, R, R], True))
+        assert row.render([3, 5, 1, 3], [L, L, L, L], True) == "a  foo  bc\n"
+        assert row.render([3, 5, 1, 3], [L, R, L, L], True) == "a    foobc\n"
+        assert row.render([3, 5, 1, 3], [R, R, R, R], True) == "  a  foob  c\n"
 
     def test_map_cells(self):
         def upper(cell: Cell) -> Cell:
@@ -28,8 +27,4 @@ class RowTest(unittest.TestCase):
 
         row = Row([Cell("a"), Cell("foo"), Cell("b")], "\n")
         row = row.map_cells(upper)
-        self.assertEqual(Row([Cell("A"), Cell("FOO"), Cell("B")], "\n"), row)
-
-
-if __name__ == '__main__':
-    unittest.main()
+        assert row == Row([Cell("A"), Cell("FOO"), Cell("B")], "\n")

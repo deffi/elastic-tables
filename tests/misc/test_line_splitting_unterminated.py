@@ -2,47 +2,46 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from io import StringIO, BytesIO
 from typing import List
-import unittest
 
 
-class LineSplittingUnterminatedTests(unittest.TestCase):
+class TestLineSplittingUnterminated:
     def test_unterminated_str(self):
         def split(string: str) -> List[str]:
             return string.splitlines(keepends=True)
 
-        self.assertEqual([]       , split(""))       # No lines
-        self.assertEqual(["\n"]   , split("\n"))     # Single empty line
-        self.assertEqual(["foo"]  , split("foo"))    # Single unterminated line
-        self.assertEqual(["foo\n"], split("foo\n"))  # Single terminated line
+        assert split("")      == []         # No lines
+        assert split("\n")    == ["\n"]     # Single empty line
+        assert split("foo")   == ["foo"]    # Single unterminated line
+        assert split("foo\n") == ["foo\n"]  # Single terminated line
 
     def test_unterminated_bytes(self):
         def split(byte_string: bytes) -> List[bytes]:
             return byte_string.splitlines(keepends=True)
 
-        self.assertEqual([]        , split(b""))       # No lines
-        self.assertEqual([b"\n"]   , split(b"\n"))     # Single empty line
-        self.assertEqual([b"foo"]  , split(b"foo"))    # Single unterminated line
-        self.assertEqual([b"foo\n"], split(b"foo\n"))  # Single terminated line
+        assert split(b"")      == []          # No lines
+        assert split(b"\n")    == [b"\n"]     # Single empty line
+        assert split(b"foo")   == [b"foo"]    # Single unterminated line
+        assert split(b"foo\n") == [b"foo\n"]  # Single terminated line
 
     def test_unterminated_string_io(self):
         def split(string: str) -> List[str]:
-            self.assertEqual(list(StringIO(string)), StringIO(string).readlines())
+            assert StringIO(string).readlines() == list(StringIO(string))
             return list(StringIO(string))
 
-        self.assertEqual([]       , split(""))       # No lines
-        self.assertEqual(["\n"]   , split("\n"))     # Single empty line
-        self.assertEqual(["foo"]  , split("foo"))    # Single unterminated line
-        self.assertEqual(["foo\n"], split("foo\n"))  # Single terminated line
+        assert split("")      == []         # No lines
+        assert split("\n")    == ["\n"]     # Single empty line
+        assert split("foo")   == ["foo"]    # Single unterminated line
+        assert split("foo\n") == ["foo\n"]  # Single terminated line
 
     def test_unterminated_bytes_io(self):
         def split(byte_string: bytes) -> List[bytes]:
-            self.assertEqual(list(BytesIO(byte_string)), BytesIO(byte_string).readlines())
+            assert BytesIO(byte_string).readlines() == list(BytesIO(byte_string))
             return list(BytesIO(byte_string))
 
-        self.assertEqual([]        , split(b""))       # No lines
-        self.assertEqual([b"\n"]   , split(b"\n"))     # Single empty line
-        self.assertEqual([b"foo"]  , split(b"foo"))    # Single unterminated line
-        self.assertEqual([b"foo\n"], split(b"foo\n"))  # Single terminated line
+        assert split(b"")      == []          # No lines
+        assert split(b"\n")    == [b"\n"]     # Single empty line
+        assert split(b"foo")   == [b"foo"]    # Single unterminated line
+        assert split(b"foo\n") == [b"foo\n"]  # Single terminated line
 
     def test_unterminated_text_file(self):
         def split(string: str) -> List[str]:
@@ -53,10 +52,10 @@ class LineSplittingUnterminatedTests(unittest.TestCase):
                     result = list(file)
             return result
 
-        self.assertEqual([]       , split(""))       # No lines
-        self.assertEqual(["\n"]   , split("\n"))     # Single empty line
-        self.assertEqual(["foo"]  , split("foo"))    # Single unterminated line
-        self.assertEqual(["foo\n"], split("foo\n"))  # Single terminated line
+        assert split("")      == []         # No lines
+        assert split("\n")    == ["\n"]     # Single empty line
+        assert split("foo")   == ["foo"]    # Single unterminated line
+        assert split("foo\n") == ["foo\n"]  # Single terminated line
 
     def test_unterminated_binary_file(self):
         def split(byte_string: bytes) -> List[bytes]:
@@ -67,11 +66,7 @@ class LineSplittingUnterminatedTests(unittest.TestCase):
                     result = list(file)
             return result
 
-        self.assertEqual([]        , split(b""))       # No lines
-        self.assertEqual([b"\n"]   , split(b"\n"))     # Single empty line
-        self.assertEqual([b"foo"]  , split(b"foo"))    # Single unterminated line
-        self.assertEqual([b"foo\n"], split(b"foo\n"))  # Single terminated line
-
-
-if __name__ == '__main__':
-    unittest.main()
+        assert split(b"")      == []          # No lines
+        assert split(b"\n")    == [b"\n"]     # Single empty line
+        assert split(b"foo")   == [b"foo"]    # Single unterminated line
+        assert split(b"foo\n") == [b"foo\n"]  # Single terminated line

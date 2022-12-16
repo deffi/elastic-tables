@@ -1,44 +1,38 @@
-import unittest
-
 from elastic_tables.model import Cell
 from elastic_tables.filter import Filter
 from elastic_tables.util.alignment import left, right, center
 
 
-class FilterTest(unittest.TestCase):
+class TestFilter:
     def test_splitting(self):
         f = Filter()
 
         f.input("foo\tb\n")
-        self.assertEqual("", f.text(clear=False))
+        assert f.text(clear=False) == ""
         f.input("b\tbar\v\n")
-        self.assertEqual("foob\nb  bar\n", f.text())
+        assert f.text() == "foob\nb  bar\n"
 
     def test_flush(self):
         f = Filter()
 
         f.input("foo\tb\n")
-        self.assertEqual("", f.text(clear=False))
+        assert f.text(clear=False) == ""
         f.flush()
-        self.assertEqual("foob\n", f.text())
+        assert f.text() == "foob\n"
 
     def test_align_cell_space(self):
         # Basic alignment
-        self.assertEqual(Cell("foo", None), Filter.align_cell_space(Cell("foo", None)))
-        self.assertEqual(Cell("foo", left), Filter.align_cell_space(Cell("foo ", None)))
-        self.assertEqual(Cell("foo", right), Filter.align_cell_space(Cell(" foo", None)))
-        self.assertEqual(Cell("foo", center), Filter.align_cell_space(Cell(" foo ", None)))
+        assert Filter.align_cell_space(Cell("foo", None)) == Cell("foo", None)
+        assert Filter.align_cell_space(Cell("foo ", None)) == Cell("foo", left)
+        assert Filter.align_cell_space(Cell(" foo", None)) == Cell("foo", right)
+        assert Filter.align_cell_space(Cell(" foo ", None)) == Cell("foo", center)
 
         # Blank cells
-        self.assertEqual(Cell(" " * 0, None), Filter.align_cell_space(Cell(" " * 0, None)))
-        self.assertEqual(Cell(" " * 0, None), Filter.align_cell_space(Cell(" " * 1, None)))
-        self.assertEqual(Cell(" " * 0, None), Filter.align_cell_space(Cell(" " * 2, None)))
-        self.assertEqual(Cell(" " * 1, None), Filter.align_cell_space(Cell(" " * 3, None)))
-        self.assertEqual(Cell(" " * 2, None), Filter.align_cell_space(Cell(" " * 4, None)))
+        assert Filter.align_cell_space(Cell(" " * 0, None)) == Cell(" " * 0, None)
+        assert Filter.align_cell_space(Cell(" " * 1, None)) == Cell(" " * 0, None)
+        assert Filter.align_cell_space(Cell(" " * 2, None)) == Cell(" " * 0, None)
+        assert Filter.align_cell_space(Cell(" " * 3, None)) == Cell(" " * 1, None)
+        assert Filter.align_cell_space(Cell(" " * 4, None)) == Cell(" " * 2, None)
 
     def test_filter(self):
-        self.assertEqual("foob\nb  bar", Filter.filter("foo\tb\nb\tbar"))
-
-
-if __name__ == '__main__':
-    unittest.main()
+        assert Filter.filter("foo\tb\nb\tbar") == "foob\nb  bar"
