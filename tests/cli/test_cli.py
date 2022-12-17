@@ -11,17 +11,6 @@ import data as test_data
 
 
 class TestCli:
-    def _test_file(self, input_path: Path, expected_path: Path, args: List[str]):
-        output = subprocess.check_output([sys.executable, cli.__file__] + args + [str(input_path)])
-        expected = expected_path.read_bytes()
-        assert output == expected
-
-    def _test_stdin(self, input_path: Path, expected_path: Path, args: List[str]):
-        input_ = input_path.read_bytes()
-        output = subprocess.check_output([sys.executable, cli.__file__] + args, input=input_)
-        expected = expected_path.read_bytes()
-        assert output == expected
-
     # TODO test that after the first chunk, the first table is output before the
     # second chunk is complete
 
@@ -58,13 +47,17 @@ class TestCli:
         input_path, expected_path = test_data.test_case(prefix, suffix)
 
         if method == "file":
-            self._test_file(input_path, expected_path, args)
+            output = subprocess.check_output([sys.executable, cli.__file__] + args + [str(input_path)])
         elif method == "stdin":
-            self._test_stdin(input_path, expected_path, args)
+            output = subprocess.check_output([sys.executable, cli.__file__] + args, input=input_path.read_bytes())
         else:
-            assert False
+            raise ValueError(f"Unhandled method: {method}")
+
+        expected = expected_path.read_bytes()
+        assert output == expected
 
 
 if os.environ.get("SKIP_CLI_TEST") == "1":
     print("Skipping CLI test")
     CliTest = None
+
