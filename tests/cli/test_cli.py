@@ -6,6 +6,7 @@ from typing import List
 import pytest
 
 from elastic_tables.cli import cli
+from elastic_tables.util.sequence import replace_value
 import data as test_data
 
 
@@ -36,14 +37,9 @@ class TestCli:
         ["align-space", []                  , "no" ],  # CLI default: False
     ], ids=str)
     def test_cli(self, method, prefix: str, args: List[str], suffix: str):
-        args = args[::]  # Avoid mutating the argument
-
         # If column_separator is not specified, use "|" (test default). If it is
-        # ..., remove (filter default).
-        if "--column-separator" not in args:
-            args.extend(["--column-separator", "|"])
-        elif args[args.index("--column-separator")+1] is ...:
-            args[args.index("--column-separator"):args.index("--column-separator")+2] = []
+        # ..., remove it (CLI default).
+        args = replace_value(args, "--column-separator", default="|", remove=[...])
 
         input_path, expected_path = test_data.test_case(prefix, suffix)
 

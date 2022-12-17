@@ -1,6 +1,7 @@
 import pytest
 
 from elastic_tables.filter import Filter
+from elastic_tables.util.dict import replace_value
 
 import data as test_data
 
@@ -29,11 +30,8 @@ class TestFilter:
     ], ids=str)
     def test_filter(self, prefix: str, filter_args: dict, suffix: str):
         # If column_separator is not specified, use "|" (test default). If it is
-        # ..., remove (filter default).
-        if "column_separator" not in filter_args:
-            filter_args["column_separator"] = "|"
-        elif filter_args["column_separator"] is ...:
-            del filter_args["column_separator"]
+        # ..., remove it (filter default).
+        filter_args = replace_value(filter_args, "column_separator", default="|", remove=[...])
 
         input_, expected = test_data.test_case_data(prefix, suffix)
         assert "".join(Filter.filter(input_, **filter_args)) == expected
