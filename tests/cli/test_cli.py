@@ -19,7 +19,7 @@ class TestCli:
         # Column separators
         ["column-separator_tab" , ["--column-separator", "\t"], ""],  # Explicit tab
         ["column-separator_pipe", ["--column-separator", "|" ], ""],  # Explicit pipe
-        # ["column-separator_tab" , ["--column-separator", ... ], ""],  # The CLI defaults to tab  # TODO fails, but only if both file and stdin is used
+        ["column-separator_tab" , ["--column-separator", ... ], ""],  # The CLI defaults to tab
         ["column-separator_pipe", [],                           ""],  # This test defaults to pipe
 
         # Line breaks
@@ -37,6 +37,8 @@ class TestCli:
         ["align-space", []                  , "no" ],  # CLI default: False
     ], ids=str)
     def test_cli(self, method, prefix: str, args: List[str], suffix: str):
+        args = args[::]  # Avoid mutating the argument
+
         # If column_separator is not specified, use "|" (test default). If it is
         # ..., remove (filter default).
         if "--column-separator" not in args:
