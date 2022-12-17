@@ -9,6 +9,9 @@ def replace_value(s: Sequence, /, key, *, default=_unspecified, remove: Sequence
     s = list(s)
 
     if key in s:
+        if s.count(key) > 1:
+            raise ValueError(f"Key appears multiple times: {key}")
+
         index = s.index(key)
 
         if index >= len(s) - 1:
