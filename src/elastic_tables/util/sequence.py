@@ -3,7 +3,6 @@ from typing import List, Sequence
 _unspecified = object()
 
 
-# TODO unit test
 def replace_value(s: Sequence, /, key, *, default=_unspecified, remove: Sequence = None) -> List:
     # Make a copy
     s = list(s)
