@@ -20,12 +20,14 @@ def splitter():
     splitter.column_separator = "|"
     return splitter
 
+
 class TestBlockSplitter:
     ###########
     # General #
     ###########
 
-    def assertSplitBlock(self, splitter, expected: Iterable[Iterable[str]], line_contents: Iterable[str], iterations: int = 3):
+    def assertSplitBlock(self, splitter, expected: Iterable[Iterable[str]], line_contents: Iterable[str],
+                         iterations: int = 3):
         for i in range(iterations):
             splitter.input(lines(*line_contents))
             splitter.flush()
