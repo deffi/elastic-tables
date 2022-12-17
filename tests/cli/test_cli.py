@@ -1,5 +1,4 @@
 import subprocess
-import os
 import sys
 from typing import List
 
@@ -14,6 +13,7 @@ class TestCli:
     # TODO test that after the first chunk, the first table is output before the
     # second chunk is complete
 
+    @pytest.mark.slow
     @pytest.mark.parametrize("method", ["file", "stdin"])
     @pytest.mark.parametrize("prefix, args, suffix", [
         # Column separators
@@ -52,8 +52,3 @@ class TestCli:
 
         expected = expected_path.read_bytes()
         assert output == expected
-
-
-if os.environ.get("SKIP_CLI_TEST") == "1":
-    print("Skipping CLI test")
-    CliTest = None
