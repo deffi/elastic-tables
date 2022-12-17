@@ -1,8 +1,7 @@
-from pathlib import Path
 import subprocess
 import os
 import sys
-from typing import Optional, List
+from typing import List
 
 import pytest
 
@@ -62,4 +61,3 @@ class TestCli:
 if os.environ.get("SKIP_CLI_TEST") == "1":
     print("Skipping CLI test")
     CliTest = None
-
