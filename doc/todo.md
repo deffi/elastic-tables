@@ -1,6 +1,13 @@
 TODOs in src
 TODOs in tests
 
+Issues
+======
+
+If we do
+    elastic_tables.io.install()
+Rich won't output colors by default (Workaround: FORCE_COLOR=1) because
+rich.console.Console().is_terminal is False
 
 Tests
 =====
